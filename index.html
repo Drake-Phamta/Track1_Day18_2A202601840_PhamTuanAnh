@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="vi" class="h-full bg-slate-950">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VLearn LMS - Human-AI Research (Day 18 Lab)</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+          animation: {
+            'fade-in': 'fadeIn 0.25s ease-out forwards',
+            'slide-up': 'slideUp 0.3s ease-out forwards',
+            'pulse-subtle': 'pulseSubtle 2s infinite',
+          },
+          keyframes: {
+            fadeIn: {
+              '0%': { opacity: '0', transform: 'scale(0.99)' },
+              '100%': { opacity: '1', transform: 'scale(1)' }
+            },
+            slideUp: {
+              '0%': { opacity: '0', transform: 'translateY(16px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' }
+            },
+            pulseSubtle: {
+              '0%, 100%': { opacity: '1' },
+              '50%': { opacity: '0.7' }
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0f172a;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #475569;
+    }
+  </style>
+</head>
+<body class="h-full font-sans text-slate-100 antialiased flex flex-col bg-slate-950 selection:bg-blue-500 selection:text-white">
+
+  <!-- ================================================================= -->
+  <!-- 1. THANH ĐIỀU KHIỂN ĐỈNH TRANG (TOP CONTROL BAR)                  -->
+  <!-- ================================================================= -->
+  <header class="border-b border-slate-800 bg-slate-900/95 backdrop-blur-md sticky top-0 z-40 shadow-xl">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Top Row: Logo, Role Switcher, Reset Button -->
+      <div class="flex items-center justify-between h-16 border-b border-slate-800/60 py-2">
+        
+        <!-- Brand Logo -->
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center shadow-lg shadow-blue-500/20 font-black text-xl text-white tracking-wider">
+            VL
+          </div>
+          <div>
+            <h1 class="font-bold text-base text-white tracking-tight flex items-center gap-2">
+              <span>VLearn LMS</span>
+              <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-blue-500/10 text-blue-400 border border-blue-500/20">Lab Day 18</span>
+            </h1>
+            <p class="text-xs text-slate-400">Human-AI Design Interactive Prototype</p>
+          </div>
+        </div>
+
+        <!-- Center & Right Controls -->
+        <div class="flex items-center space-x-3 sm:space-x-4">
+          
+          <!-- PROMINENT ROLE SWITCHER (Segmented Control) -->
+          <div class="bg-slate-950 p-1 rounded-xl border border-slate-800 flex items-center space-x-1 shadow-inner">
+            <button id="role-btn-learner" onclick="switchRole('learner')" 
+                    class="role-btn px-3 sm:px-4 py-1.5 rounded-lg text-xs font-bold transition-all duration-200 flex items-center space-x-1.5">
+              <span>🎓</span>
+              <span>Học viên (Learner)</span>
+            </button>
+            <button id="role-btn-instructor" onclick="switchRole('instructor')" 
+                    class="role-btn px-3 sm:px-4 py-1.5 rounded-lg text-xs font-bold transition-all duration-200 flex items-center space-x-1.5">
+              <span>👨‍🏫</span>
+              <span>Giảng viên (Instructor)</span>
+            </button>
+          </div>
+
+          <!-- Reset Button -->
+          <button onclick="resetDemoData()" 
+                  title="Khôi phục trạng thái ban đầu"
+                  class="inline-flex items-center space-x-1.5 text-xs text-slate-400 hover:text-white bg-slate-800 hover:bg-slate-700 px-3 py-1.5 rounded-xl border border-slate-700 transition">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+            <span class="hidden sm:inline">Reset Demo</span>
+          </button>
+
+        </div>
+
+      </div>
+
+      <!-- Bottom Row: OPTION SWITCHER TABS & MECHANISM CARD -->
+      <div class="flex flex-col md:flex-row md:items-center justify-between py-2.5 overflow-x-auto gap-3">
+        <div class="flex space-x-2 sm:space-x-3 shrink-0" aria-label="Option Tabs">
+          
+          <button id="tab-btn-a" onclick="switchOption('a')" 
+                  class="option-tab px-4 py-2 rounded-xl text-xs font-semibold transition-all duration-200 border flex items-center space-x-2">
+            <span class="w-5 h-5 rounded-md bg-slate-800 flex items-center justify-center font-bold text-[11px] text-slate-300">A</span>
+            <span>Option A: Manual Dashboard</span>
+          </button>
+
+          <button id="tab-btn-b" onclick="switchOption('b')" 
+                  class="option-tab px-4 py-2 rounded-xl text-xs font-semibold transition-all duration-200 border flex items-center space-x-2">
+            <span class="w-5 h-5 rounded-md bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold text-[11px]">B</span>
+            <span>Option B: AI Support Radar</span>
+          </button>
+
+          <button id="tab-btn-c" onclick="switchOption('c')" 
+                  class="option-tab px-4 py-2 rounded-xl text-xs font-semibold transition-all duration-200 border flex items-center space-x-2">
+            <span class="w-5 h-5 rounded-md bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-[11px]">C</span>
+            <span>Option C: Peer Micro-Match</span>
+          </button>
+
+        </div>
+
+        <!-- THẺ MÔ TẢ CƠ CHẾ OPTION (Option Mechanism Info Card) -->
+        <div id="option-mechanism-card" class="hidden md:flex items-center space-x-3 text-xs px-3.5 py-1.5 rounded-xl bg-slate-950 border transition-all duration-200 shadow-md">
+          <!-- Dynamic content updated via JS -->
+        </div>
+
+      </div>
+
+    </div>
+  </header>
+
+
+  <!-- ================================================================= -->
+  <!-- 2. THANH TÓM TẮT LUỒNG (TEST FLOW BANNER)                         -->
+  <!-- ================================================================= -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-0 w-full">
+    <div id="test-flow-banner" class="bg-slate-900/90 border border-slate-800 rounded-xl text-xs px-4 py-2.5 flex items-center justify-between shadow-lg backdrop-blur-sm transition-all duration-200">
+      <div id="test-flow-text" class="font-medium text-slate-200 flex items-center space-x-2 overflow-x-auto py-0.5 whitespace-nowrap">
+        <!-- Dynamic text updated via JS -->
+      </div>
+      <div class="hidden sm:flex items-center space-x-2 text-[11px] text-slate-400 shrink-0 pl-3 border-l border-slate-800">
+        <span>Đang xem vai trò:</span>
+        <strong id="test-flow-role-text" class="text-blue-400 font-bold">🎓 Học viên</strong>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ================================================================= -->
+  <!-- MAIN CONTENT PANELS CONTAINER                                      -->
+  <!-- ================================================================= -->
+  <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8">
+
+
+    <!-- ================================================================= -->
+    <!-- KỊCH BẢN 1: HỌC VIÊN (LEARNER VIEWS)                              -->
+    <!-- ================================================================= -->
+
+    <!-- COMMON LEARNER LESSON FRAME (Wrapper for Learner Views) -->
+    <div id="learner-view-wrapper" class="space-y-6 hidden">
+      
+      <!-- Learner Top Header Banner -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <div class="flex items-center space-x-2">
+            <span class="px-2.5 py-0.5 rounded text-[11px] font-bold bg-blue-500/20 text-blue-300 border border-blue-500/30">
+              🎓 Học viên View
+            </span>
+            <span id="learner-option-tag" class="text-xs text-slate-400">Option A - Manual</span>
+          </div>
+          <h2 class="text-lg sm:text-xl font-bold text-white mt-1">Bài 4.2: Thuật toán chèn Cây Nhị Phân Tìm Kiếm (BST Insertion)</h2>
+          <p class="text-xs sm:text-sm text-slate-400 mt-0.5">Khóa học: CS201 - Cấu trúc dữ liệu & Thuật toán | Giảng viên: Nguyễn Văn Thầy</p>
+        </div>
+
+        <div class="flex items-center space-x-3 bg-slate-950/80 p-3 rounded-xl border border-slate-800">
+          <div class="w-3 h-3 rounded-full bg-amber-400 animate-pulse"></div>
+          <div class="text-xs">
+            <div class="text-slate-400">Thời gian dừng ở Slide 8</div>
+            <div class="font-mono font-bold text-amber-400 text-sm">14 phút 20 giây</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Code & Slide Interactive Editor Frame -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-2xl space-y-0">
+        
+        <!-- Player Header -->
+        <div class="bg-slate-950 px-6 py-3.5 border-b border-slate-800 flex items-center justify-between">
+          <div class="flex items-center space-x-2 font-mono text-xs text-slate-300">
+            <span class="text-blue-400">📄 bst_insert.cpp</span>
+            <span class="text-slate-600">|</span>
+            <span class="text-slate-400">Slide 8 / 15</span>
+          </div>
+          <span class="px-2.5 py-0.5 rounded text-[11px] font-semibold bg-rose-500/10 text-rose-400 border border-rose-500/20">
+            ⚠️ Đã thử 3 lần (Lỗi đệ quy)
+          </span>
+        </div>
+
+        <!-- Code Snippet Box -->
+        <div class="p-6 font-mono text-xs text-slate-200 leading-relaxed bg-slate-950 overflow-x-auto space-y-3">
+          <div class="text-slate-500">// C++ Code Example: BST Insert Node (Slide 8)</div>
+          <pre class="text-emerald-400">TreeNode* insertNode(TreeNode* root, int val) {
+    <span class="text-slate-500">// TODO: Xác định điều kiện dừng (Base Case) ở đây</span>
+    <span class="text-rose-400 font-bold bg-rose-950/40 px-1 py-0.5 rounded">// THIẾU BASE CASE: root == nullptr</span>
+    
+    if (val < root->val) {
+        root->left = insertNode(root->left, val);
+    } else {
+        root->right = insertNode(root->right, val);
+    }
+    return root;
+}</pre>
+
+          <!-- Compiler Output Error Console -->
+          <div class="p-3.5 bg-rose-950/30 border border-rose-800/40 rounded-xl text-rose-300 font-sans text-xs space-y-1">
+            <div class="font-bold flex items-center space-x-1.5">
+              <svg class="w-4 h-4 text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              <span>Console Error Output:</span>
+            </div>
+            <p class="font-mono text-[11px] text-rose-200/90 pl-5">Runtime Error: Segmentation Fault (Core Dumped). Accessing memory location 0x00000000. Stack overflow depth > 1000.</p>
+          </div>
+        </div>
+
+        <!-- Learner Option-Specific Bottom Area -->
+        <div class="p-4 sm:p-6 bg-slate-900 border-t border-slate-800">
+          
+          <!-- Option A Learner Specific Content -->
+          <div id="learner-option-a-panel" class="hidden flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="text-xs text-slate-400">
+              Bạn bị nghẽn bài học? Tự tra cứu tài liệu bài giảng cũ bên dưới.
+            </div>
+            <button onclick="openLearnerModalA()" 
+                    class="inline-flex items-center space-x-2 px-5 py-2.5 rounded-xl text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition">
+              <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+              <span>Hỗ trợ (Xem lại bài giảng)</span>
+            </button>
+          </div>
+
+          <!-- Option B Learner Specific Content (Shown when NO message sent yet) -->
+          <div id="learner-option-b-panel" class="hidden flex items-center justify-center">
+            <div class="inline-flex items-center space-x-2 text-xs text-blue-300 bg-blue-950/60 px-4 py-2 rounded-xl border border-blue-800/60 shadow-inner">
+              <span class="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></span>
+              <span>🤖 AI đang theo dõi tiến độ học tập ẩn danh để hỗ trợ khi cần</span>
+            </div>
+          </div>
+
+          <!-- Option C Learner Specific Content -->
+          <div id="learner-option-c-panel" class="hidden flex items-center justify-between text-xs text-slate-400">
+            <span class="text-emerald-400 font-semibold flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+              AI Co-learning Peer Match Active
+            </span>
+            <span>Widget hỗ trợ tức thì đang bật ở góc phải màn hình ↘</span>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- ================================================================= -->
+    <!-- KỊCH BẢN 2: GIẢNG VIÊN (INSTRUCTOR VIEWS)                         -->
+    <!-- ================================================================= -->
+
+    <!-- INSTRUCTOR VIEW PANEL -->
+    <div id="instructor-view-wrapper" class="space-y-6 hidden">
+      
+      <!-- Instructor Option A: Manual Queue -->
+      <div id="instructor-option-a-panel" class="space-y-6 hidden">
+        
+        <!-- Header -->
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl">
+          <div class="flex items-center space-x-2">
+            <span class="px-2.5 py-0.5 rounded text-[11px] font-bold bg-slate-800 text-slate-300 border border-slate-700">Option A - Manual</span>
+            <span class="text-xs text-slate-400">Instructor Portal Baseline</span>
+          </div>
+          <h2 class="text-xl font-bold text-white mt-1">Danh sách học viên vượt ngưỡng khó khăn (Dừng > 10 phút hoặc Sai > 2 lần)</h2>
+          <p class="text-xs text-slate-400 mt-1">Giảng viên theo dõi danh sách cảnh báo thủ công và tự soạn lời nhắn hỗ trợ cho từng học viên.</p>
+        </div>
+
+        <!-- Student Data Table -->
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-xl">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-sm text-slate-300">
+              <thead class="bg-slate-950 text-xs uppercase text-slate-400 border-b border-slate-800">
+                <tr>
+                  <th scope="col" class="py-4 px-6 font-semibold">Học viên</th>
+                  <th scope="col" class="py-4 px-6 font-semibold">Bài học & Vị trí</th>
+                  <th scope="col" class="py-4 px-6 font-semibold">Trạng thái cảnh báo</th>
+                  <th scope="col" class="py-4 px-6 font-semibold text-right">Thao tác</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-800">
+                <tr class="hover:bg-slate-800/40 transition">
+                  <td class="py-4 px-6">
+                    <div class="flex items-center space-x-3">
+                      <div class="w-10 h-10 rounded-full bg-blue-600/20 text-blue-400 font-bold flex items-center justify-center border border-blue-500/30">
+                        NVA
+                      </div>
+                      <div>
+                        <div class="font-bold text-white">Nguyễn Văn A</div>
+                        <div class="text-xs text-slate-400">ID: HV-2026-081</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="py-4 px-6">
+                    <div class="font-medium text-slate-200">Module 4: Cây nhị phân tìm kiếm (BST)</div>
+                    <div class="text-xs text-blue-400">Slide 8: Thuật toán đệ quy Chèn (Insert)</div>
+                  </td>
+                  <td class="py-4 px-6">
+                    <div class="flex flex-wrap items-center gap-2">
+                      <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                        ⏱️ Dừng 14 phút
+                      </span>
+                      <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-rose-500/10 text-rose-400 border border-rose-500/20">
+                        ❌ Sai 3 lần
+                      </span>
+                    </div>
+                  </td>
+                  <td class="py-4 px-6 text-right">
+                    <button onclick="openInstructorModalA()" 
+                            class="inline-flex items-center space-x-2 px-4 py-2 rounded-xl text-xs font-bold bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-600/20 transition">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 012.828 0L20.586 7.586a2 2 0 010 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                      <span>Soạn tin nhắn</span>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Instructor Option B: AI Support Radar -->
+      <div id="instructor-option-b-panel" class="space-y-6 hidden">
+        
+        <!-- Header -->
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl">
+          <div class="flex items-center space-x-2">
+            <span class="px-2.5 py-0.5 rounded text-[11px] font-bold bg-amber-500/20 text-amber-400 border border-amber-500/30">Option B - AI Collaborative</span>
+            <span class="text-xs text-slate-400">AI Radar Queue</span>
+          </div>
+          <h2 class="text-xl font-bold text-white mt-1">Hàng đợi can thiệp sau phiên học (AI Support Queue)</h2>
+          <p class="text-xs text-slate-400 mt-1">AI phân tích hành vi, chẩn đoán lỗ hổng kiến thức và dự thảo tin nhắn can thiệp để Giảng viên duyệt nhanh.</p>
+        </div>
+
+        <!-- Student Radar Card -->
+        <div id="instructor-card-b" class="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-2xl space-y-6">
+          
+          <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-800 pb-5">
+            <div class="flex items-center space-x-4">
+              <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-rose-500 to-amber-500 text-white font-black text-lg flex items-center justify-center shadow-lg shadow-rose-500/20">
+                NVA
+              </div>
+              <div>
+                <div class="flex items-center space-x-3">
+                  <h3 class="text-lg font-bold text-white">Nguyễn Văn A</h3>
+                  <span class="px-3 py-1 rounded-full text-xs font-bold bg-rose-500/20 text-rose-300 border border-rose-500/40 flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-rose-400 animate-pulse"></span>
+                    Cần hỗ trợ gấp
+                  </span>
+                </div>
+                <p class="text-xs text-slate-400 mt-0.5">Khóa học: CS201 - Module 4: BST (Slide 8)</p>
+              </div>
+            </div>
+
+            <span class="text-xs text-slate-400 bg-slate-950 px-3 py-1.5 rounded-lg border border-slate-800">
+              Độ chính xác AI: <strong class="text-emerald-400">94%</strong>
+            </span>
+          </div>
+
+          <!-- 2 Columns: Signal & Diagnostic -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-slate-950 p-5 rounded-xl border border-slate-800/80 space-y-3">
+              <div class="text-xs font-bold text-amber-400 uppercase tracking-wider">📊 Tín hiệu hành vi:</div>
+              <ul class="space-y-2 text-xs text-slate-300">
+                <li>• Dừng <strong>14 phút</strong> liên tiếp tại Slide 8 (Thuật toán BST Insert).</li>
+                <li>• Đặt <strong>3 câu hỏi</strong> cho AI Chatbot về <em>"Base case đệ quy"</em>.</li>
+              </ul>
+            </div>
+
+            <div class="bg-slate-950 p-5 rounded-xl border border-slate-800/80 space-y-3">
+              <div class="text-xs font-bold text-blue-400 uppercase tracking-wider">🧠 AI Chẩn đoán:</div>
+              <p class="text-xs text-blue-200 leading-relaxed bg-blue-950/30 p-3 rounded-lg border border-blue-900/40">
+                Học viên đang bị hổng khái niệm điều kiện dừng khi duyệt con trỏ null trong thuật toán đệ quy.
+              </p>
+            </div>
+          </div>
+
+          <!-- Editable Message -->
+          <div class="space-y-2">
+            <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider">Đề xuất tin nhắn can thiệp (Có thể chỉnh sửa):</label>
+            <textarea id="input-instructor-b" rows="3" 
+                      class="w-full bg-slate-950 text-slate-100 text-sm border border-indigo-500/40 rounded-xl p-4 focus:outline-none focus:border-indigo-400 leading-relaxed">Chào A, thầy thấy em đang xem kỹ phần đệ quy ở Slide 8. Em có cần thầy gửi thêm 1 ví dụ trực quan về Base Case hay giải đáp nhanh không?</textarea>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="flex flex-col sm:flex-row items-center justify-end gap-3 pt-3 border-t border-slate-800">
+            <button onclick="dismissInstructorCardB()" 
+                    class="w-full sm:w-auto px-5 py-3 rounded-xl text-xs font-semibold text-slate-400 hover:text-white bg-slate-800 hover:bg-slate-700 border border-slate-700 transition">
+              Bỏ qua / AI phán đoán sai
+            </button>
+            <button onclick="approveInstructorCardB()" 
+                    class="w-full sm:w-auto inline-flex items-center justify-center space-x-2 px-6 py-3 rounded-xl text-xs font-bold bg-blue-600 hover:bg-blue-500 text-white shadow-xl shadow-blue-600/30 transition">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              <span>Duyệt & Gửi 1-Click</span>
+            </button>
+          </div>
+
+        </div>
+
+        <!-- Processed State Card -->
+        <div id="instructor-card-b-processed" class="bg-slate-900 border border-slate-800 rounded-2xl p-10 text-center space-y-3 hidden">
+          <div class="text-3xl text-emerald-400">✓</div>
+          <h3 class="font-bold text-white">Đã hoàn thành xử lý hàng đợi AI Radar!</h3>
+          <p class="text-xs text-slate-400">Tin nhắn can thiệp đã được gửi đến giao diện Học viên.</p>
+          <button onclick="resetInstructorCardB()" class="text-xs text-blue-400 hover:underline">↺ Xem lại thẻ Nguyễn Văn A (Demo lại)</button>
+        </div>
+
+      </div>
+
+      <!-- Instructor Option C: Peer Monitor -->
+      <div id="instructor-option-c-panel" class="space-y-6 hidden">
+        
+        <!-- Header -->
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl">
+          <div class="flex items-center space-x-2">
+            <span class="px-2.5 py-0.5 rounded text-[11px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">Option C - Peer Monitor</span>
+            <span class="text-xs text-slate-400">Wild Peer Learning Dashboard</span>
+          </div>
+          <h2 class="text-xl font-bold text-white mt-1">Dashboard Giám Sát Học Nhóm Ngang Hàng (Peer Learning Monitor)</h2>
+          <p class="text-xs text-slate-400 mt-1">Hệ thống AI tự động phân cặp kết nối các học viên để tự giải quyết vướng mắc mà không cần giảng viên can thiệp trực tiếp.</p>
+        </div>
+
+        <!-- Monitor Cards Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          
+          <!-- Card 1: Completed Session -->
+          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+              <span class="px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                Phiên kết nối hoàn thành
+              </span>
+              <span class="text-xs text-slate-500">2 phút trước</span>
+            </div>
+
+            <div class="space-y-3">
+              <div class="flex items-center justify-between text-xs">
+                <div class="flex items-center space-x-2">
+                  <span class="font-bold text-white">Nguyễn Văn A</span>
+                  <span class="text-slate-500">↔</span>
+                  <span class="font-bold text-emerald-400">Trần Minh</span>
+                </div>
+                <span class="text-slate-400">Thời lượng: 3 phút</span>
+              </div>
+
+              <div class="p-3 bg-slate-950 rounded-xl border border-slate-800 text-xs text-slate-300 space-y-1">
+                <div class="font-semibold text-slate-200">📌 Chủ đề thảo luận:</div>
+                <p class="text-slate-400">Khắc phục lỗi Base Case trong thuật toán đệ quy Cây nhị phân tìm kiếm (Slide 8).</p>
+              </div>
+
+              <div class="flex items-center justify-between text-xs pt-1">
+                <span class="text-slate-400">Trạng thái sau phiên:</span>
+                <span class="font-bold text-emerald-400">🟢 Đã thông suốt bài học (Đã pass Slide 8)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2: Active Session -->
+          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+              <span class="px-2.5 py-1 rounded-full text-xs font-bold bg-blue-500/20 text-blue-400 border border-blue-500/30 flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-blue-400 animate-ping"></span>
+                Đang trò chuyện (Real-time)
+              </span>
+              <span class="text-xs text-slate-500">Đồng hồ: 01:45</span>
+            </div>
+
+            <div class="space-y-3">
+              <div class="flex items-center justify-between text-xs">
+                <div class="flex items-center space-x-2">
+                  <span class="font-bold text-white">Lê Thị B</span>
+                  <span class="text-slate-500">↔</span>
+                  <span class="font-bold text-blue-400">Phạm Hoàng C</span>
+                </div>
+                <span class="text-slate-400">Mảng 2 chiều</span>
+              </div>
+
+              <div class="p-3 bg-slate-950 rounded-xl border border-slate-800 text-xs text-slate-300 space-y-1">
+                <div class="font-semibold text-slate-200">📌 Chủ đề thảo luận:</div>
+                <p class="text-slate-400">Cách duyệt ma trận xoắn ốc bằng vòng lặp while.</p>
+              </div>
+
+              <div class="flex items-center justify-between text-xs pt-1">
+                <span class="text-slate-400">Đánh giá hiệu quả AI Match:</span>
+                <span class="font-bold text-blue-400">Tự giải quyết thành công 87.5%</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+
+  <!-- ================================================================= -->
+  <!-- MODALS & FLOATING WIDGETS (FIXED CONTAINER)                       -->
+  <!-- ================================================================= -->
+
+  <!-- MODAL FOR LEARNER OPTION A (Self-study lectures directory) -->
+  <div id="modal-learner-a" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-sm hidden p-4">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-5">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <h3 class="font-bold text-white text-base">Thư viện bài giảng tự học hỗ trợ</h3>
+        <button onclick="closeLearnerModalA()" class="text-slate-400 hover:text-white p-1">✕</button>
+      </div>
+      <p class="text-xs text-slate-400">Vui lòng chọn bài giảng cũ bên dưới để tự ôn tập lại khái niệm Base Case:</p>
+      <div class="space-y-2 text-xs">
+        <button onclick="readLectureItem('Slide 3: Tổng quan đệ quy')" class="w-full text-left p-3 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-800 text-slate-200 transition">
+          📘 Slide 3: Khái niệm Đệ quy & Ngăn xếp cuộc gọi (Call Stack)
+        </button>
+        <button onclick="readLectureItem('Slide 5: Điều kiện dừng Base Case')" class="w-full text-left p-3 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-800 text-slate-200 transition">
+          📘 Slide 5: Định nghĩa Điều kiện dừng (Base Case) tránh đệ quy vô tận
+        </button>
+      </div>
+      <div class="flex justify-end border-t border-slate-800 pt-3">
+        <button onclick="closeLearnerModalA()" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700">Đóng</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL FOR INSTRUCTOR OPTION A (Manual Message Typing) -->
+  <div id="modal-instructor-a" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-sm hidden p-4">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <h3 class="font-bold text-white text-base">Soạn tin nhắn hỗ trợ thủ công</h3>
+        <button onclick="closeInstructorModalA()" class="text-slate-400 hover:text-white p-1">✕</button>
+      </div>
+      <p class="text-xs text-slate-400">Gửi tới học viên: <strong class="text-white">Nguyễn Văn A</strong> (Slide 8 - BST)</p>
+      <textarea id="input-instructor-manual-a" rows="4" 
+                placeholder="Nhập lời nhắn hỗ trợ cho học viên..." 
+                class="w-full bg-slate-950 text-slate-100 text-sm border border-slate-800 rounded-xl p-3.5 focus:outline-none focus:border-blue-500 resize-none"></textarea>
+      <div class="flex justify-end space-x-3 border-t border-slate-800 pt-3">
+        <button onclick="closeInstructorModalA()" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-800 text-slate-400 hover:text-white">Hủy</button>
+        <button onclick="sendManualMessageA()" class="px-5 py-2 rounded-xl text-xs font-bold bg-blue-600 hover:bg-blue-500 text-white shadow-lg">Gửi thủ công</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FLOATING CARD FOR LEARNER OPTION B (INSTRUCTOR DIRECT MESSAGE) -->
+  <div id="card-learner-option-b" class="fixed bottom-6 right-6 z-50 max-w-md w-[380px] bg-slate-900 border-2 border-indigo-500/60 rounded-2xl p-5 shadow-2xl shadow-indigo-500/20 animate-slide-up space-y-4 hidden">
+    
+    <!-- Header Card -->
+    <div class="flex items-start justify-between border-b border-slate-800 pb-3">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-blue-500 text-white font-bold flex items-center justify-center shadow-md shadow-indigo-500/30 text-sm">
+          👨‍🏫
+        </div>
+        <div>
+          <div class="flex items-center space-x-2">
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+              Tin nhắn hỗ trợ trực tiếp
+            </span>
+            <span class="text-[10px] text-slate-400">Vừa xong</span>
+          </div>
+          <h4 class="font-bold text-sm text-white mt-0.5">Thầy Nguyễn Văn Thầy (Giảng viên bộ môn)</h4>
+        </div>
+      </div>
+      <button onclick="dismissLearnerCardB()" class="text-slate-400 hover:text-white p-1">✕</button>
+    </div>
+
+    <!-- Body Content 1: Initial Message -->
+    <div id="learner-card-b-initial-body" class="space-y-3">
+      <p id="learner-card-b-text" class="text-xs text-slate-200 leading-relaxed bg-slate-950 p-3.5 rounded-xl border border-slate-800">
+        "Chào A, thầy thấy em đang xem kỹ phần đệ quy ở Slide 8. Em có cần thầy gửi thêm 1 ví dụ trực quan về Base Case hay giải đáp nhanh không?"
+      </p>
+
+      <!-- Action Buttons -->
+      <div class="space-y-2 pt-1">
+        <button onclick="showOptionBExample()" 
+                class="w-full inline-flex items-center justify-center space-x-2 px-4 py-2.5 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/30 transition">
+          <span>💡 Em muốn xem ví dụ ạ</span>
+        </button>
+        <button onclick="dismissLearnerCardB()" 
+                class="w-full text-center py-2 rounded-xl text-xs font-medium text-slate-400 hover:text-white bg-slate-800/60 hover:bg-slate-800 transition">
+          Cảm ơn thầy, em đang tự thử lại
+        </button>
+      </div>
+    </div>
+
+    <!-- Body Content 2: Code Example (Shown when clicking "Em muốn xem ví dụ ạ") -->
+    <div id="learner-card-b-example-body" class="space-y-3 hidden">
+      <div class="p-3.5 bg-slate-950 rounded-xl border border-indigo-500/40 font-mono text-xs text-indigo-200 space-y-2">
+        <div class="text-[11px] text-slate-400 font-sans font-semibold">// Ví dụ trực quan điều kiện dừng Base Case:</div>
+        <pre class="text-emerald-400">if (root == nullptr) {
+    return new TreeNode(val);
+}</pre>
+        <p class="text-[11px] text-slate-300 font-sans leading-relaxed">
+          👉 Khi con trỏ rỗng (`nullptr`), hàm lập tức tạo nút mới và trả về điểm dừng đệ quy.
+        </p>
+      </div>
+
+      <button onclick="dismissLearnerCardB()" 
+              class="w-full text-center py-2.5 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white transition shadow-md">
+        ✓ Đã hiểu, quay lại làm bài
+      </button>
+    </div>
+
+  </div>
+
+  <!-- FLOATING WIDGET FOR LEARNER OPTION C (PEER MICRO-MATCH POP-UP) -->
+  <div id="widget-option-c" class="fixed bottom-6 right-6 z-50 max-w-sm w-[350px] bg-slate-900 border-2 border-emerald-500/60 rounded-2xl p-5 shadow-2xl shadow-emerald-500/30 animate-slide-up space-y-4 hidden">
+    <div class="flex items-start justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-400 text-white flex items-center justify-center text-lg font-bold shadow-md shadow-emerald-500/30">
+          ✨
+        </div>
+        <div>
+          <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 uppercase">
+            AI Co-learning - Hỗ trợ tức thì
+          </span>
+          <h4 class="font-bold text-sm text-white mt-1">Gợi ý kết nối bạn học</h4>
+        </div>
+      </div>
+      <button onclick="closeWidgetC()" class="text-slate-400 hover:text-white p-1">✕</button>
+    </div>
+
+    <div class="text-xs text-slate-300 leading-relaxed bg-slate-950 p-3.5 rounded-xl border border-slate-800 space-y-1">
+      <p class="text-amber-300 font-semibold">⚠️ Bạn đã dừng ở lỗi Base Case hơn 14 phút.</p>
+      <p class="text-slate-300 mt-1">Bạn <strong>Trần Minh</strong> vừa giải xong câu này với điểm tối đa. Bạn có muốn kết nối chat ẩn danh 3 phút để trao đổi không?</p>
+    </div>
+
+    <div class="space-y-2 pt-1">
+      <button onclick="openPeerChatC()" 
+              class="w-full inline-flex items-center justify-center space-x-2 px-4 py-2.5 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-600/30 transition">
+        <span>Kết nối ẩn danh với Minh</span>
+      </button>
+      <button onclick="closeWidgetC()" 
+              class="w-full text-center py-2 rounded-xl text-xs font-medium text-slate-400 hover:text-white bg-slate-800/60 hover:bg-slate-800 transition">
+        Tôi tự học tiếp
+      </button>
+    </div>
+  </div>
+
+  <!-- FLOATING MINI-CHAT DRAWER FOR LEARNER OPTION C (~320px x 400px) -->
+  <div id="chat-drawer-c" class="fixed bottom-6 right-6 z-50 w-[330px] h-[400px] bg-slate-900 border-2 border-emerald-500/60 rounded-2xl shadow-2xl shadow-emerald-500/20 overflow-hidden hidden flex-col transition-all duration-300">
+    <div class="bg-slate-950 px-4 py-3 border-b border-slate-800 flex items-center justify-between shrink-0">
+      <div class="flex items-center space-x-2">
+        <div class="w-7 h-7 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xs">TM</div>
+        <div>
+          <div class="font-bold text-xs text-white">Chat ẩn danh với Trần Minh</div>
+          <div class="text-[10px] text-emerald-400 font-semibold">(Thời gian còn: <span id="chat-timer">03:00</span>)</div>
+        </div>
+      </div>
+      <button onclick="closeChatC()" title="Đóng phiên chat" class="text-slate-400 hover:text-white p-1">✕</button>
+    </div>
+
+    <div id="chat-messages-container" class="p-3.5 flex-1 overflow-y-auto space-y-3 text-xs bg-slate-950/70">
+      <div class="text-center my-1">
+        <span class="px-2.5 py-1 rounded-full text-[10px] bg-slate-800 text-slate-400 border border-slate-700">🤖 Kết nối chat ẩn danh 3 phút</span>
+      </div>
+      <div class="flex items-start space-x-2">
+        <div class="w-6 h-6 rounded-full bg-emerald-600/30 text-emerald-300 flex items-center justify-center font-bold text-[10px] shrink-0 mt-0.5">TM</div>
+        <div class="bg-slate-800 text-slate-100 p-3 rounded-2xl rounded-tl-none max-w-[85%] leading-relaxed">
+          Chào bạn, phần đệ quy này bạn chú ý điều kiện dừng <code class="bg-slate-950 text-emerald-300 px-1 py-0.5 rounded font-mono">root == nullptr</code> phải trả về <code class="bg-slate-950 text-emerald-300 px-1 py-0.5 rounded font-mono">new TreeNode(val)</code> nhé!
+        </div>
+      </div>
+    </div>
+
+    <div class="p-3 bg-slate-950 border-t border-slate-800 flex items-center space-x-2 shrink-0">
+      <input id="chat-input-field" type="text" placeholder="Nhập tin nhắn..." 
+             onkeypress="if(event.key==='Enter') sendPeerChatMessage()"
+             class="flex-1 bg-slate-900 text-slate-100 text-xs border border-slate-800 rounded-xl px-3 py-2 focus:outline-none focus:border-emerald-500">
+      <button onclick="sendPeerChatMessage()" class="p-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl">➔</button>
+    </div>
+  </div>
+
+
+  <!-- GLOBAL TOAST NOTIFICATION CONTAINER -->
+  <div id="toast-container" class="fixed top-20 right-6 z-50 space-y-3 pointer-events-none max-w-sm w-full"></div>
+
+
+  <!-- ================================================================= -->
+  <!-- JAVASCRIPT APP ARCHITECTURE                                       -->
+  <!-- ================================================================= -->
+  <script>
+    // State Variables
+    let currentRole = 'learner'; // 'learner' | 'instructor'
+    let currentOption = 'a';     // 'a' | 'b' | 'c'
+    let isInstructorMessageSent = false;
+    let isOptionBExampleShown = false;
+    let chatTimerInterval = null;
+    let isWidgetCClosed = false;
+    let isChatCOpen = false;
+
+    // Initialize Application
+    document.addEventListener('DOMContentLoaded', () => {
+      renderState();
+    });
+
+    // Switch Role Function
+    function switchRole(roleKey) {
+      currentRole = roleKey;
+      renderState();
+      showToast(`Đã chuyển sang giao diện ${roleKey === 'learner' ? 'Học viên' : 'Giảng viên'}`, 'info');
+    }
+
+    // Switch Option Function
+    function switchOption(optionKey) {
+      currentOption = optionKey;
+      renderState();
+    }
+
+    // Master Render Function for 2 Roles x 3 Options (6 States)
+    function renderState() {
+      // 1. Update Role Buttons UI
+      const learnerBtn = document.getElementById('role-btn-learner');
+      const instructorBtn = document.getElementById('role-btn-instructor');
+
+      if (currentRole === 'learner') {
+        learnerBtn.className = 'role-btn px-3 sm:px-4 py-1.5 rounded-lg text-xs font-bold transition-all bg-blue-600 text-white shadow-md';
+        instructorBtn.className = 'role-btn px-3 sm:px-4 py-1.5 rounded-lg text-xs font-bold transition-all text-slate-400 hover:text-white hover:bg-slate-900';
+      } else {
+        instructorBtn.className = 'role-btn px-3 sm:px-4 py-1.5 rounded-lg text-xs font-bold transition-all bg-indigo-600 text-white shadow-md';
+        learnerBtn.className = 'role-btn px-3 sm:px-4 py-1.5 rounded-lg text-xs font-bold transition-all text-slate-400 hover:text-white hover:bg-slate-900';
+      }
+
+      // 2. Update Option Tabs UI
+      ['a', 'b', 'c'].forEach(opt => {
+        const tabBtn = document.getElementById(`tab-btn-${opt}`);
+        if (opt === currentOption) {
+          tabBtn.className = 'option-tab px-4 py-2 rounded-xl text-xs font-bold transition-all bg-slate-800 border-blue-500 text-white shadow-md';
+        } else {
+          tabBtn.className = 'option-tab px-4 py-2 rounded-xl text-xs font-semibold transition-all bg-transparent border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-900';
+        }
+      });
+
+      // 3. Update Option Mechanism Info Card & Test Flow Banner
+      const mechanismCard = document.getElementById('option-mechanism-card');
+      const flowText = document.getElementById('test-flow-text');
+      const flowRoleText = document.getElementById('test-flow-role-text');
+
+      flowRoleText.textContent = currentRole === 'learner' ? '🎓 Học viên (Learner)' : '👨‍🏫 Giảng viên (Instructor)';
+      flowRoleText.className = currentRole === 'learner' ? 'text-blue-400 font-bold' : 'text-indigo-400 font-bold';
+
+      if (currentOption === 'a') {
+        mechanismCard.className = 'hidden md:flex items-center space-x-3 text-xs px-3.5 py-1.5 rounded-xl bg-slate-950 border border-slate-700/80 text-slate-300 shadow-md';
+        mechanismCard.innerHTML = `
+          <div class="flex flex-col text-left">
+            <div class="flex items-center space-x-1.5">
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-800 text-slate-300 border border-slate-700">Cơ chế: Thủ công (Rule-based)</span>
+            </div>
+            <p class="text-[11px] text-slate-400 mt-0.5">Hệ thống chỉ lọc danh sách theo ngưỡng thời gian. Giảng viên tự phân tích và tự gõ tin nhắn hỗ trợ.</p>
+          </div>
+        `;
+
+        flowText.innerHTML = `
+          <span class="text-amber-400 font-bold shrink-0 mr-1">📌 Luồng test Option A:</span>
+          <span class="bg-slate-800 text-slate-200 px-2 py-0.5 rounded border border-slate-700 font-medium">[🎓 Học viên kẹt bài 14 phút]</span>
+          <span class="text-slate-500">➔</span>
+          <span class="bg-slate-800 text-slate-200 px-2 py-0.5 rounded border border-slate-700 font-medium">[👨‍🏫 Giảng viên lọc danh sách vượt ngưỡng]</span>
+          <span class="text-slate-500">➔</span>
+          <span class="bg-slate-800 text-slate-200 px-2 py-0.5 rounded border border-slate-700 font-medium">[👨‍🏫 Tự gõ & gửi tin nhắn thủ công]</span>
+        `;
+      } else if (currentOption === 'b') {
+        mechanismCard.className = 'hidden md:flex items-center space-x-3 text-xs px-3.5 py-1.5 rounded-xl bg-indigo-950/40 border border-indigo-500/40 text-indigo-200 shadow-md';
+        mechanismCard.innerHTML = `
+          <div class="flex flex-col text-left">
+            <div class="flex items-center space-x-1.5">
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">Cơ chế: Cộng tác Người - AI (Collaborative)</span>
+            </div>
+            <p class="text-[11px] text-slate-400 mt-0.5">AI tổng hợp tín hiệu, chẩn đoán điểm nghẽn và soạn sẵn tin nhắn. Giảng viên đóng vai trò thẩm định & duyệt 1-click.</p>
+          </div>
+        `;
+
+        flowText.innerHTML = `
+          <span class="text-amber-400 font-bold shrink-0 mr-1">📌 Luồng test Option B:</span>
+          <span class="bg-indigo-950/80 text-indigo-300 px-2 py-0.5 rounded border border-indigo-800/60 font-medium">[🎓 Học viên kẹt bài & hỏi AI]</span>
+          <span class="text-slate-500">➔</span>
+          <span class="bg-indigo-950/80 text-indigo-300 px-2 py-0.5 rounded border border-indigo-800/60 font-medium">[🤖 AI chẩn đoán & soạn mẫu]</span>
+          <span class="text-slate-500">➔</span>
+          <span class="bg-indigo-950/80 text-indigo-300 px-2 py-0.5 rounded border border-indigo-800/60 font-medium">[👨‍🏫 Giảng viên duyệt 1-Click]</span>
+          <span class="text-slate-500">➔</span>
+          <span class="bg-indigo-950/80 text-indigo-300 px-2 py-0.5 rounded border border-indigo-800/60 font-medium">[🎓 Học viên nhận gợi ý]</span>
+        `;
+      } else if (currentOption === 'c') {
+        mechanismCard.className = 'hidden md:flex items-center space-x-3 text-xs px-3.5 py-1.5 rounded-xl bg-emerald-950/40 border border-emerald-500/40 text-emerald-200 shadow-md';
+        mechanismCard.innerHTML = `
+          <div class="flex flex-col text-left">
+            <div class="flex items-center space-x-1.5">
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Cơ chế: Kết nối ngang hàng (Peer Wild Match)</span>
+            </div>
+            <p class="text-[11px] text-slate-400 mt-0.5">AI đóng vai trò môi giới, tự động kết nối ẩn danh người đang bị kẹt với bạn học vừa hoàn thành xuất sắc.</p>
+          </div>
+        `;
+
+        flowText.innerHTML = `
+          <span class="text-amber-400 font-bold shrink-0 mr-1">📌 Luồng test Option C:</span>
+          <span class="bg-emerald-950/80 text-emerald-300 px-2 py-0.5 rounded border border-emerald-800/60 font-medium">[🎓 Học viên dừng > 8 phút]</span>
+          <span class="text-slate-500">➔</span>
+          <span class="bg-emerald-950/80 text-emerald-300 px-2 py-0.5 rounded border border-emerald-800/60 font-medium">[🤖 AI phát hiện bế tắc]</span>
+          <span class="text-slate-500">➔</span>
+          <span class="bg-emerald-950/80 text-emerald-300 px-2 py-0.5 rounded border border-emerald-800/60 font-medium">[🤝 Gợi ý ghép đôi bạn học]</span>
+          <span class="text-slate-500">➔</span>
+          <span class="bg-emerald-950/80 text-emerald-300 px-2 py-0.5 rounded border border-emerald-800/60 font-medium">[💬 Mở Mini-Chat 3 phút]</span>
+        `;
+      }
+
+      // 4. Toggle Main View Wrappers
+      const learnerWrapper = document.getElementById('learner-view-wrapper');
+      const instructorWrapper = document.getElementById('instructor-view-wrapper');
+
+      if (currentRole === 'learner') {
+        learnerWrapper.classList.remove('hidden');
+        learnerWrapper.classList.add('animate-fade-in');
+        instructorWrapper.classList.add('hidden');
+
+        // Toggle Learner Option Specific Panels
+        document.getElementById('learner-option-a-panel').classList.toggle('hidden', currentOption !== 'a');
+        document.getElementById('learner-option-b-panel').classList.toggle('hidden', currentOption !== 'b' || isInstructorMessageSent);
+        document.getElementById('learner-option-c-panel').classList.toggle('hidden', currentOption !== 'c');
+
+        const learnerOptionTag = document.getElementById('learner-option-tag');
+        if (currentOption === 'a') learnerOptionTag.textContent = 'Option A - Manual Baseline';
+        else if (currentOption === 'b') learnerOptionTag.textContent = 'Option B - AI Support Radar';
+        else learnerOptionTag.textContent = 'Option C - Peer Micro-Match (Wild)';
+
+      } else {
+        instructorWrapper.classList.remove('hidden');
+        instructorWrapper.classList.add('animate-fade-in');
+        learnerWrapper.classList.add('hidden');
+
+        // Toggle Instructor Option Specific Panels
+        document.getElementById('instructor-option-a-panel').classList.toggle('hidden', currentOption !== 'a');
+        document.getElementById('instructor-option-b-panel').classList.toggle('hidden', currentOption !== 'b');
+        document.getElementById('instructor-option-c-panel').classList.toggle('hidden', currentOption !== 'c');
+      }
+
+      // 5. Option B Learner Floating Card Visibility
+      const learnerCardB = document.getElementById('card-learner-option-b');
+      if (currentRole === 'learner' && currentOption === 'b' && isInstructorMessageSent) {
+        learnerCardB.classList.remove('hidden');
+        learnerCardB.classList.add('animate-slide-up');
+      } else {
+        learnerCardB.classList.add('hidden');
+      }
+
+      // 6. Option C Floating Elements Visibility
+      const widgetC = document.getElementById('widget-option-c');
+      const chatC = document.getElementById('chat-drawer-c');
+
+      if (currentRole === 'learner' && currentOption === 'c') {
+        if (isChatCOpen) {
+          chatC.classList.remove('hidden');
+          chatC.classList.add('flex');
+          widgetC.classList.add('hidden');
+        } else if (!isWidgetCClosed) {
+          widgetC.classList.remove('hidden');
+          chatC.classList.add('hidden');
+          chatC.classList.remove('flex');
+        }
+      } else {
+        widgetC.classList.add('hidden');
+        chatC.classList.add('hidden');
+        chatC.classList.remove('flex');
+      }
+    }
+
+    // Modal Control Functions
+    function openLearnerModalA() {
+      document.getElementById('modal-learner-a').classList.remove('hidden');
+    }
+    function closeLearnerModalA() {
+      document.getElementById('modal-learner-a').classList.add('hidden');
+    }
+    function readLectureItem(title) {
+      closeLearnerModalA();
+      showToast(`Đã mở tài liệu tự đọc: ${title}!`, 'success');
+    }
+
+    function openInstructorModalA() {
+      document.getElementById('modal-instructor-a').classList.remove('hidden');
+    }
+    function closeInstructorModalA() {
+      document.getElementById('modal-instructor-a').classList.add('hidden');
+    }
+    function sendManualMessageA() {
+      const val = document.getElementById('input-instructor-manual-a').value.trim();
+      if (!val) {
+        showToast('Vui lòng nhập nội dung tin nhắn hỗ trợ!', 'warning');
+        return;
+      }
+      closeInstructorModalA();
+      showToast('Đã gửi tin nhắn thủ công thành công!', 'success');
+      document.getElementById('input-instructor-manual-a').value = '';
+    }
+
+    // Instructor Option B Card Actions
+    function approveInstructorCardB() {
+      isInstructorMessageSent = true;
+      const editedMsg = document.getElementById('input-instructor-b').value;
+      if (editedMsg) {
+        document.getElementById('learner-card-b-text').textContent = `"${editedMsg}"`;
+      }
+      document.getElementById('instructor-card-b').classList.add('hidden');
+      document.getElementById('instructor-card-b-processed').classList.remove('hidden');
+      showToast('Đã gửi tin nhắn đến học viên! Hãy chuyển sang vai Học viên để kiểm tra trải nghiệm nhận tin nhắn.', 'success');
+    }
+    function dismissInstructorCardB() {
+      document.getElementById('instructor-card-b').classList.add('hidden');
+      document.getElementById('instructor-card-b-processed').classList.remove('hidden');
+      showToast('Đã đánh dấu AI phán đoán sai & bỏ qua.', 'info');
+    }
+    function resetInstructorCardB() {
+      document.getElementById('instructor-card-b-processed').classList.add('hidden');
+      document.getElementById('instructor-card-b').classList.remove('hidden');
+    }
+
+    // Option B Learner Card Interactions
+    function showOptionBExample() {
+      isOptionBExampleShown = true;
+      document.getElementById('learner-card-b-initial-body').classList.add('hidden');
+      document.getElementById('learner-card-b-example-body').classList.remove('hidden');
+      showToast('Đã tải ví dụ trực quan giải thích về Base Case!', 'info');
+    }
+
+    function dismissLearnerCardB() {
+      document.getElementById('card-learner-option-b').classList.add('hidden');
+      showToast('Đã đóng tin nhắn hỗ trợ của Giảng viên.', 'info');
+    }
+
+    // Option C Floating Widget & Chat Actions
+    function closeWidgetC() {
+      isWidgetCClosed = true;
+      document.getElementById('widget-option-c').classList.add('hidden');
+      showToast('Đã ẩn đề xuất ghép đôi. Bạn có thể tự học tiếp.', 'info');
+    }
+
+    function openPeerChatC() {
+      isWidgetCClosed = true;
+      isChatCOpen = true;
+      document.getElementById('widget-option-c').classList.add('hidden');
+
+      const chatC = document.getElementById('chat-drawer-c');
+      chatC.classList.remove('hidden');
+      chatC.classList.add('flex', 'animate-slide-up');
+
+      showToast('Đã kết nối chat ẩn danh 3 phút với Trần Minh!', 'success');
+      startChatTimer();
+    }
+
+    function closeChatC() {
+      isChatCOpen = false;
+      const chatC = document.getElementById('chat-drawer-c');
+      chatC.classList.add('hidden');
+      chatC.classList.remove('flex');
+      if (chatTimerInterval) clearInterval(chatTimerInterval);
+      showToast('Đã đóng phiên chat hỗ trợ với Trần Minh.', 'info');
+    }
+
+    function sendPeerChatMessage() {
+      const input = document.getElementById('chat-input-field');
+      const val = input.value.trim();
+      if (!val) return;
+
+      const container = document.getElementById('chat-messages-container');
+      const userBubble = document.createElement('div');
+      userBubble.className = 'flex items-start justify-end space-x-2';
+      userBubble.innerHTML = `
+        <div class="bg-emerald-600 text-white p-3 rounded-2xl rounded-tr-none max-w-[85%] leading-relaxed shadow-sm">
+          ${escapeHtml(val)}
+        </div>
+      `;
+      container.appendChild(userBubble);
+      input.value = '';
+      container.scrollTop = container.scrollHeight;
+
+      setTimeout(() => {
+        if (!isChatCOpen) return;
+        const peerBubble = document.createElement('div');
+        peerBubble.className = 'flex items-start space-x-2 animate-fade-in';
+        peerBubble.innerHTML = `
+          <div class="w-6 h-6 rounded-full bg-emerald-600/30 text-emerald-300 flex items-center justify-center font-bold text-[10px] shrink-0 mt-0.5">TM</div>
+          <div class="bg-slate-800 text-slate-200 p-3 rounded-2xl rounded-tl-none max-w-[85%] leading-relaxed shadow-sm">
+            Cảm ơn bạn! Nếu sửa xong và chạy thử thành công thì đánh giá cho mình nhé 👍
+          </div>
+        `;
+        container.appendChild(peerBubble);
+        container.scrollTop = container.scrollHeight;
+      }, 1200);
+    }
+
+    function startChatTimer() {
+      let seconds = 179;
+      const timerDisplay = document.getElementById('chat-timer');
+      if (chatTimerInterval) clearInterval(chatTimerInterval);
+
+      chatTimerInterval = setInterval(() => {
+        if (seconds <= 0) {
+          clearInterval(chatTimerInterval);
+          if (timerDisplay) timerDisplay.textContent = "00:00";
+          showToast('Phiên micro-match 3 phút đã kết thúc!', 'info');
+          return;
+        }
+        const m = Math.floor(seconds / 60).toString().padStart(2, '0');
+        const s = (seconds % 60).toString().padStart(2, '0');
+        if (timerDisplay) timerDisplay.textContent = `${m}:${s}`;
+        seconds--;
+      }, 1000);
+    }
+
+    // Reset Demo Data
+    function resetDemoData() {
+      currentRole = 'learner';
+      currentOption = 'a';
+      isInstructorMessageSent = false;
+      isOptionBExampleShown = false;
+      isWidgetCClosed = false;
+      isChatCOpen = false;
+
+      closeChatC();
+      closeLearnerModalA();
+      closeInstructorModalA();
+      resetInstructorCardB();
+
+      document.getElementById('learner-card-b-initial-body').classList.remove('hidden');
+      document.getElementById('learner-card-b-example-body').classList.add('hidden');
+      document.getElementById('card-learner-option-b').classList.add('hidden');
+
+      renderState();
+      showToast('Đã khôi phục toàn bộ dữ liệu ứng dụng về ban đầu!', 'info');
+    }
+
+    // Toast Notification System
+    function showToast(message, type = 'success') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+
+      let borderClr = 'border-emerald-500/40 bg-emerald-950/90 text-emerald-200';
+      let icon = '✓';
+
+      if (type === 'warning') {
+        borderClr = 'border-amber-500/40 bg-amber-950/90 text-amber-200';
+        icon = '⚠️';
+      } else if (type === 'info') {
+        borderClr = 'border-blue-500/40 bg-blue-950/90 text-blue-200';
+        icon = 'ℹ️';
+      }
+
+      toast.className = `pointer-events-auto flex items-center space-x-3 px-4 py-3 rounded-xl border ${borderClr} shadow-2xl backdrop-blur-md text-xs font-semibold animate-slide-up transition-all duration-300`;
+      toast.innerHTML = `
+        <span class="text-sm">${icon}</span>
+        <span class="flex-1">${escapeHtml(message)}</span>
+      `;
+
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => toast.remove(), 300);
+      }, 3500);
+    }
+
+    function escapeHtml(str) {
+      return str.replace(/[&<>"']/g, function(m) {
+        return {
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          '"': '&quot;',
+          "'": '&#039;'
+        }[m];
+      });
+    }
+  </script>
+</body>
+</html>

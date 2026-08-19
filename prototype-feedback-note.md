@@ -4,7 +4,8 @@
 > **Option tôi phụ trách:** Option C — Structured Support Form (No AI)
 > **Vai trong test matrix nhóm:** Tester 3 · thứ tự **C → A → B**
 
-Form theo [group/chang5.md](group/chang5.md) và [group/chang6.md](group/chang6.md). Chỉ ghi hành vi và lời nói quan sát được; phần diễn giải để riêng ở mục INTERPRETED.
+Form theo [group/chang5.md](group/chang5.md) và [group/chang6.md](group/chang6.md).
+Phiếu ghi nhanh dùng trong lúc chạy phiên: [prep/phieu-ghi-test.md](prep/phieu-ghi-test.md). Chỉ ghi hành vi và lời nói quan sát được; phần diễn giải để riêng ở mục INTERPRETED.
 
 ---
 

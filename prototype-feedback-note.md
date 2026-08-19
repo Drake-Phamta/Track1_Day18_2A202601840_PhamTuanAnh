@@ -11,16 +11,16 @@ Phiếu ghi nhanh dùng trong lúc chạy phiên: [prep/phieu-ghi-test.md](prep/
 
 ## 1. Thông tin phiên test
 
-| Mục                                        | Nội dung                      |
-| :------------------------------------------ | :----------------------------- |
-| Người test                                | **T-01** — ngoài nhóm |
-| Ngày / giờ                                | 19/08/2026, 9:33               |
-| Thời lượng                               |                                |
-| Tester có relevant context                 | **Có**                  |
-| Relevant context ngắn — bằng lời tester | _không ghi nhận_           |
-| Thứ tự option                             | **C → A → B**          |
-| Có can thiệp kỹ thuật không            | _không ghi nhận_           |
-| Đã xin phép ghi chú                     | **Có**                  |
+| Mục                                        | Nội dung                        |
+| :------------------------------------------ | :------------------------------- |
+| Người test                                | **T-01** — ngoài nhóm   |
+| Ngày / giờ                                | 19/08/2026, 9:33                 |
+| Thời lượng                               | 10 phút                         |
+| Tester có relevant context                 | **Có**                    |
+| Relevant context ngắn — bằng lời tester | Tôi có gặp khăn trong quá  |
+| Thứ tự option                             | **C → A → B**            |
+| Có can thiệp kỹ thuật không            | _không ghi nhận_             |
+| Đã xin phép ghi chú                     | **Có**                    |
 
 **Câu hỏi relevant context** — hỏi trong tối đa 2 phút, không giới thiệu trước A/B/C:
 

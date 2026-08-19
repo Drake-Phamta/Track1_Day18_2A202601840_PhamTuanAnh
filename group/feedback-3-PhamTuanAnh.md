@@ -9,7 +9,7 @@
 - **Người test:** T-01 — ngoài nhóm
 - **Người facilitate:** Phạm Tuấn Anh (`2A202601840`)
 - **Ngày/giờ:** 19/08/2026, 9:33
-- **Thời lượng:** _chưa ghi nhận_
+- **Thời lượng:** 10 phút
 - **Tester có relevant context:** **Có**
 - **Relevant context ngắn:** _chưa ghi nhận bằng lời tester — đang hỏi lại_
 - **Thứ tự option:** **C → A → B**

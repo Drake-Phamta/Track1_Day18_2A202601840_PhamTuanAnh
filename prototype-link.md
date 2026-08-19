@@ -1,38 +1,53 @@
 # Prototype Links
 
-> **Dự án / Case Study:** VLearn LMS - 3 Human-AI Design Options  
-> **Nhóm:** Hello world  
-> **Thành viên:** Nguyễn Ngọc Chi (2A202602024), Nguyễn Minh Hiếu (2A202601154), Phạm Tuấn Anh (2A202601840)
+> **Case:** C — AI Support Radar · **Nhóm:** Hello world
+> **Thành viên:** Nguyễn Ngọc Chi (2A202602024) · Nguyễn Minh Hiếu (2A202601154) · Phạm Tuấn Anh (2A202601840)
 
 ---
 
-## Danh Sách Link Prototype Các Option
+## Cách mở
 
-### 🎨 Option A: Giảng Viên - Dashboard Thủ Công (Baseline)
-- **Người thực hiện:** Nguyễn Minh Hiếu (MHV: `2A202601154`)
-- **Công cụ tạo Prototype:** HTML5 + Tailwind CSS + Vanilla JS (Single Page App)
-- **Link Interactive Prototype:** [Mở index.html tại đây](index.html) hoặc xem file [`index.html`](https://drake-phamta.github.io/Track1_Day18_2A202601840_PhamTuanAnh/)
-- **Lưu ý khi test:** Bấm vào nút "Hỗ trợ" ở dòng học viên Nguyễn Văn A để mở Modal soạn tin nhắn thủ công.
+| Cách | Đường dẫn |
+| :--- | :--- |
+| Link công khai | https://drake-phamta.github.io/Track1_Day18_2A202601840_PhamTuanAnh/ |
+| Mở trực tiếp trong repo | [index.html](index.html) — double-click bằng trình duyệt, không cần server |
 
----
-
-### 🎨 Option B: Giảng Viên - AI Support Radar (Collaborative)
-- **Người thực hiện:** Nguyễn Ngọc Chi (MHV: `2A202602024`)
-- **Công cụ tạo Prototype:** HTML5 + Tailwind CSS + Vanilla JS (Single Page App)
-- **Link Interactive Prototype:** [Mở Tab Option B trong index.html](https://drake-phamta.github.io/Track1_Day18_2A202601840_PhamTuanAnh/)
-- **Lưu ý khi test:** Thẻ AI Support Radar chứa tín hiệu hành vi, chẩn đoán của AI và tin nhắn đề xuất có thể chỉnh sửa/chọn giọng văn. Thử bấm "Duyệt & Gửi ngay" hoặc "Bỏ qua / Chẩn đoán sai".
+Dùng thanh tab trên cùng để chuyển giữa Option A, B, C. Mỗi option có nút reset để quay về common context ban đầu.
 
 ---
 
-### 🎨 Option C: Học Viên - Peer Micro-Match (Wild Student Experience)
-- **Người thực hiện:** Phạm Tuấn Anh (MHV: `2A202601840`)
-- **Công cụ tạo Prototype:** HTML5 + Tailwind CSS + Vanilla JS (Single Page App)
-- **Link Interactive Prototype:** [Mở Tab Option C trong index.html](https://drake-phamta.github.io/Track1_Day18_2A202601840_PhamTuanAnh/)
-- **Lưu ý khi test:** Giả lập giao diện học viên đang kẹt ở Slide 8 bài Cây nhị phân. Widget AI nổi góc dưới bên phải gợi ý kết nối 3 phút với bạn Trần Minh. Bấm "Kết nối nhanh" để mở khung live chat 2 chiều.
+## Common context — dùng chung cho cả ba option
+
+- VLearn Lab Day 5 — Environment Setup, bước cấu hình Environment Variable.
+- Chạy `npm run dev` gặp `Error: NEXT_PUBLIC_API_KEY is not defined` tại `lib/api.js:12`.
+- Hai Coach trực ca: **Le Thi Hoa** (Frontend/UI) · **Nguyen Duc Minh** (DevOps/Môi trường).
+
+Ba option dùng chung khoảng 70% context, content fixture và visual components. Khác biệt chỉ nằm ở critical interaction.
 
 ---
 
-## Hướng Dẫn Truy Cập & Kiểm Thử
-1. **Mở trực tiếp:** Mở file [`index.html`](index.html) bằng bất kỳ trình duyệt hiện đại nào (Chrome, Edge, Firefox, Safari).
-2. **Tab Navigation:** Sử dụng thanh điều hướng trên cùng để chuyển đổi mượt mà giữa Option A, Option B và Option C.
-3. **Reset Demo:** Bấm nút "Reset Demo" ở góc trên bên phải thanh Header để đưa tất cả về trạng thái ban đầu bất kỳ lúc nào.
+## Option A — AI Context Extractor
+
+- **Cơ chế:** learner bấm *Cần hỗ trợ*, AI quét terminal và bài học hiện tại để tạo bản nháp; learner sửa và tự chọn Coach trước khi gửi.
+- **Chế độ AI:** Ask — AI soạn nháp nhưng không tự gửi, không tự chọn người nhận.
+- **Khi test:** thử sửa bản nháp, thử đổi Coach, xem điều gì xảy ra nếu gửi mà không sửa gì.
+
+## Option B — AI Smart Routing
+
+- **Cơ chế:** AI phát hiện lỗi lặp lại trong phiên học, phân tích tín hiệu và hiện pop-up đề xuất Coach phù hợp; learner xác nhận hoặc dismiss.
+- **Chế độ AI:** Ask — pop-up nêu rõ tín hiệu đã dùng, không tự gửi ticket.
+- **Khi test:** đọc phần lý do AI đưa ra gợi ý, thử bấm *Không, tôi muốn tự làm* để xem đường dismiss.
+
+## Option C — Structured Support Form *(Phạm Tuấn Anh phụ trách)*
+
+- **Cơ chế:** learner bấm *Yêu cầu hỗ trợ*, tự chọn danh mục lỗi, mô tả tình huống và paste đoạn lỗi; hệ thống định tuyến theo rule sau khi submit đủ trường bắt buộc.
+- **Chế độ AI:** **Don't infer** — không có AI suy đoán. Đây là option đối chứng để đo giá trị thật của AI ở A và B.
+- **Khi test:** thử submit khi còn thiếu trường để thấy validation; thử chọn nhầm danh mục rồi tìm đường sửa hoặc tạo lại.
+
+---
+
+## Không có trong prototype, và cố ý không có
+
+- Model hoặc API thật — toàn bộ output của AI ở Option A và B là canned output cố định.
+- Onboarding, dashboard đầy đủ, responsive nhiều thiết bị, visual polish.
+- Trường hợp AI đoán sai bước hoặc sai Coach — ghi vào Still Unproven, không mô phỏng.

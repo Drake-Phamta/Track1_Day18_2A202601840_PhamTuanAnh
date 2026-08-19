@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Phiếu ghi phiên test — Day 18</title>
+<style>
+  :root{
+    --bg:#f5f7fa; --surface:#fff; --border:#dde3ec; --border2:#c3ccda;
+    --text:#16202e; --dim:#5b6878; --faint:#8b95a5;
+    --accent:#1c5fd6; --accent-soft:#e8f0fe;
+    --warn:#b5641a; --warn-soft:#fdf3e6;
+    --ok:#1c7a4f; --ok-soft:#e7f4ed;
+    --r:10px; --mono:ui-monospace,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);
+    font:15px/1.55 -apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+    padding-bottom:90px;-webkit-text-size-adjust:100%}
+  .wrap{max-width:860px;margin:0 auto;padding:0 16px}
+
+  header{position:sticky;top:0;z-index:20;background:var(--surface);
+    border-bottom:1px solid var(--border);box-shadow:0 1px 6px rgba(16,24,40,.06)}
+  .hrow{max-width:860px;margin:0 auto;padding:10px 16px;
+    display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .hrow h1{font-size:15px;margin:0;flex:1;min-width:140px}
+  .clock{font:700 22px/1 var(--mono);font-variant-numeric:tabular-nums;
+    padding:6px 10px;border-radius:8px;background:var(--accent-soft);color:var(--accent)}
+  .clock.run{background:var(--ok-soft);color:var(--ok)}
+
+  h2{font-size:15px;margin:26px 0 10px;padding-bottom:6px;border-bottom:2px solid var(--border)}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);
+    padding:14px 16px;margin-bottom:12px}
+  label{display:block;font-weight:600;font-size:13.5px;margin:12px 0 4px}
+  label:first-child{margin-top:0}
+  .hint{font-weight:400;color:var(--faint)}
+  textarea,input[type=text],input[type=datetime-local],select{
+    width:100%;font:inherit;font-size:14px;color:var(--text);padding:8px 10px;
+    border:1px solid var(--border2);border-radius:7px;background:var(--surface);resize:vertical}
+  textarea{min-height:56px}
+  textarea:focus,input:focus,select:focus{outline:2px solid var(--accent-soft);border-color:var(--accent)}
+  .row{display:flex;gap:8px;align-items:flex-start}
+  .row textarea{flex:1}
+
+  .btn{font:inherit;font-size:13px;font-weight:600;padding:7px 12px;border-radius:7px;
+    border:1px solid var(--border2);background:var(--surface);color:var(--text);cursor:pointer}
+  .btn:hover{background:var(--bg)}
+  .btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+  .btn.ghost{border-color:transparent;background:transparent;color:var(--dim)}
+  .btn.stamp{flex:none;padding:7px 9px;font-family:var(--mono)}
+  .btns{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+
+  .opt{border-left:4px solid var(--border2)}
+  .opt.c{border-left-color:var(--ok)}
+  .opt.a{border-left-color:var(--accent)}
+  .opt.b{border-left-color:var(--warn)}
+  .opt h3{margin:0 0 2px;font-size:15px}
+  .opt .sub{color:var(--dim);font-size:12.5px;margin-bottom:6px}
+
+  .note{background:var(--warn-soft);border:1px solid #f0dcbe;color:var(--warn);
+    padding:9px 12px;border-radius:8px;font-size:13px;margin:10px 0}
+  .radios{display:flex;gap:14px;flex-wrap:wrap;font-weight:400;font-size:14px}
+  .radios label{display:inline-flex;align-items:center;gap:5px;margin:0;font-weight:400}
+  .quote input{margin-bottom:6px}
+
+  footer{position:fixed;left:0;right:0;bottom:0;background:var(--surface);
+    border-top:1px solid var(--border);padding:10px 16px;z-index:20}
+  .frow{max-width:860px;margin:0 auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .saved{color:var(--faint);font-size:12.5px;margin-left:auto}
+  #out{width:100%;min-height:220px;font-family:var(--mono);font-size:12px;margin-top:10px}
+  dialog{border:0;border-radius:var(--r);padding:0;max-width:820px;width:92%}
+  dialog::backdrop{background:rgba(16,24,40,.5)}
+  .dlg{padding:16px}
+  @media(max-width:520px){ .hrow h1{font-size:13.5px} .clock{font-size:19px} }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hrow">
+    <h1>Phiếu ghi phiên test · Day 18 · thứ tự <b>C → A → B</b></h1>
+    <div class="clock" id="clock">00:00</div>
+    <button class="btn" id="tbtn" onclick="toggleTimer()">Bắt đầu</button>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="note">
+    Ghi <b>hành vi</b>, đừng ghi kết luận. Dùng được: <i>"im 8 giây rồi rê chuột lên nút Gửi"</i>.
+    Không dùng: <i>"thấy khó hiểu"</i> — đó đã là diễn giải.
+    Nút <b>⏱</b> chèn mốc thời gian vào ô.
+  </div>
+
+  <h2>1 · Thông tin phiên</h2>
+  <div class="card">
+    <label>Mã hoặc tên tester</label>
+    <input type="text" id="s_tester" placeholder="ví dụ: T-03">
+
+    <label>Ngày giờ</label>
+    <input type="text" id="s_when" placeholder="19/08/2026 20:00">
+
+    <label>Thời lượng thực tế</label>
+    <input type="text" id="s_dur" placeholder="20 phút">
+
+    <label>Tester có relevant context không?
+      <span class="hint">— từng kẹt lab và phải giải thích lại bối cảnh, hoặc gặp nhầm người hỗ trợ</span></label>
+    <div class="radios">
+      <label><input type="radio" name="ctx" value="Có"> Có</label>
+      <label><input type="radio" name="ctx" value="Một phần"> Một phần</label>
+      <label><input type="radio" name="ctx" value="Không"> Không</label>
+    </div>
+
+    <label>Họ trả lời thế nào <span class="hint">— ghi bằng lời họ</span></label>
+    <div class="row"><textarea id="s_ctxq"></textarea><button class="btn stamp" onclick="stamp('s_ctxq')">⏱</button></div>
+
+    <label>Đã xin phép ghi chú?</label>
+    <div class="radios">
+      <label><input type="radio" name="consent" value="Có"> Có</label>
+      <label><input type="radio" name="consent" value="Không"> Không</label>
+    </div>
+
+    <label>Có phải can thiệp kỹ thuật không? <span class="hint">— nếu có: ở option nào, làm gì</span></label>
+    <textarea id="s_intv" placeholder="Không / hoặc mô tả"></textarea>
+  </div>
+
+  <h2>2 · Ghi theo từng option</h2>
+  <div id="opts"></div>
+
+  <h2>3 · Watchlist riêng Option C</h2>
+  <div class="card opt c">
+    <div class="sub">Không đọc cho tester nghe. Đây là phần của bạn.</div>
+    <label>Chọn danh mục nào, dựa vào dấu hiệu gì</label>
+    <div class="row"><textarea id="w1"></textarea><button class="btn stamp" onclick="stamp('w1')">⏱</button></div>
+    <label>Có paste code lỗi không, hay chỉ mô tả bằng lời</label>
+    <textarea id="w2"></textarea>
+    <label>Có kêu form dài hoặc rắc rối không</label>
+    <textarea id="w3"></textarea>
+    <label>Mất bao lâu để điền xong form</label>
+    <input type="text" id="w4" placeholder="ví dụ: khoảng 1 phút 40">
+    <label>Phản ứng khi validation chặn vì thiếu trường bắt buộc</label>
+    <textarea id="w5"></textarea>
+  </div>
+
+  <h2>4 · So sánh — chỉ hỏi sau khi đã dùng cả ba</h2>
+  <div class="card">
+    <div class="sub" style="color:var(--dim);font-size:13px;margin-bottom:10px">
+      1. Trong tình huống này, bạn chọn A, B hay C? Vì sao?<br>
+      2. Bạn muốn tự làm phần nào và giao cho AI phần nào?<br>
+      3. <b>Điều gì ở phương án đã chọn khiến bạn chưa thoải mái?</b>
+    </div>
+    <label>Option được chọn</label>
+    <div class="radios">
+      <label><input type="radio" name="pick" value="A"> A — AI soạn nháp</label>
+      <label><input type="radio" name="pick" value="B"> B — AI gợi ý Coach</label>
+      <label><input type="radio" name="pick" value="C"> C — form thủ công</label>
+    </div>
+    <label>Lý do họ nói ra</label>
+    <textarea id="c_why"></textarea>
+    <label>Trade-off họ chấp nhận</label>
+    <textarea id="c_trade"></textarea>
+    <label>Muốn tự làm phần nào, giao AI phần nào</label>
+    <textarea id="c_split"></textarea>
+    <label>Điều khiến họ chưa thoải mái ở phương án đã chọn</label>
+    <textarea id="c_uncomf"></textarea>
+  </div>
+
+  <h2>5 · Hai thứ đắt nhất</h2>
+  <div class="card">
+    <label>Quote nguyên văn <span class="hint">— đúng chữ họ nói, kể cả nói lửng</span></label>
+    <div class="quote">
+      <input type="text" id="q1" placeholder="quote 1">
+      <input type="text" id="q2" placeholder="quote 2">
+      <input type="text" id="q3" placeholder="quote 3">
+    </div>
+    <label>Evidence chống lại kỳ vọng của nhóm
+      <span class="hint">— ngược với giả định "learner muốn AI làm hộ"</span></label>
+    <textarea id="c_against" placeholder="vẫn chọn C dù gõ nhiều hơn · thấy B phiền · không tin tên Coach AI gợi ý · bỏ qua bản nháp không đọc"></textarea>
+  </div>
+
+  <h2>6 · Tự đánh giá facilitate</h2>
+  <div class="card">
+    <label>Có lỡ narrate, giải thích icon, hay lấp im lặng chỗ nào không?</label>
+    <textarea id="f_self"></textarea>
+  </div>
+
+</div>
+
+<footer>
+  <div class="frow">
+    <button class="btn primary" onclick="showOut()">Xuất markdown</button>
+    <button class="btn" onclick="copyAll()">Copy</button>
+    <button class="btn ghost" onclick="wipe()">Xoá hết</button>
+    <span class="saved" id="saved">tự lưu trong trình duyệt</span>
+  </div>
+</footer>
+
+<dialog id="dlg">
+  <div class="dlg">
+    <div class="btns" style="justify-content:space-between">
+      <b>Dán nội dung này vào chat</b>
+      <span>
+        <button class="btn primary" onclick="copyAll()">Copy</button>
+        <button class="btn ghost" onclick="dlg.close()">Đóng</button>
+      </span>
+    </div>
+    <textarea id="out" readonly></textarea>
+  </div>
+</dialog>
+
+<script>
+/* ---------- ba option, thứ tự C -> A -> B ---------- */
+var OPTS = [
+  {k:"c", t:"Option C — Structured Support Form", s:"Form thủ công, không AI. Chạy ĐẦU TIÊN."},
+  {k:"a", t:"Option A — AI Context Extractor",   s:"AI soạn bản nháp, learner sửa và tự chọn Coach."},
+  {k:"b", t:"Option B — AI Smart Routing",       s:"AI phát hiện tín hiệu, pop-up gợi ý Coach."}
+];
+var FIELDS = [
+  ["f1","Chạm hoặc nhìn gì đầu tiên, mất bao lâu, có quay lại không"],
+  ["f2","Dừng, do dự hoặc hiểu sai ở đâu — bao lâu, nói gì lúc đó"],
+  ["f3","Đọc hay bỏ qua: lỗi terminal · bản nháp (A) · lý do AI và tên Coach (B)"],
+  ["f4","Sửa / đổi Coach / dismiss / validation / reset — và CÓ TÌM THẤY đường đó không"]
+];
+
+var host = document.getElementById("opts");
+OPTS.forEach(function(o){
+  var h = '<div class="card opt '+o.k+'"><h3>'+o.t+'</h3><div class="sub">'+o.s+'</div>';
+  FIELDS.forEach(function(f){
+    var id = o.k+"_"+f[0];
+    h += '<label>'+f[1]+'</label><div class="row"><textarea id="'+id+'"></textarea>'
+       + '<button class="btn stamp" onclick="stamp(\''+id+'\')">⏱</button></div>';
+  });
+  host.insertAdjacentHTML("beforeend", h + '</div>');
+});
+
+/* ---------- đồng hồ ---------- */
+var t0=null, acc=0, tick=null;
+function fmt(ms){var s=Math.floor(ms/1000);return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0");}
+function elapsed(){return acc + (t0 ? Date.now()-t0 : 0);}
+function paint(){document.getElementById("clock").textContent = fmt(elapsed());}
+function toggleTimer(){
+  var b=document.getElementById("tbtn"), c=document.getElementById("clock");
+  if(t0){ acc=elapsed(); t0=null; clearInterval(tick); b.textContent="Tiếp"; c.classList.remove("run"); }
+  else { t0=Date.now(); tick=setInterval(paint,500); b.textContent="Tạm dừng"; c.classList.add("run"); }
+  paint(); save();
+}
+function stamp(id){
+  var el=document.getElementById(id);
+  var mark="["+fmt(elapsed())+"] ";
+  el.value = el.value ? el.value.replace(/\s*$/,"") + "\n" + mark : mark;
+  el.focus(); el.selectionStart=el.selectionEnd=el.value.length; save();
+}
+
+/* ---------- lưu ---------- */
+var KEY="day18-test-note";
+function ids(){
+  var a=[];
+  document.querySelectorAll("input[type=text],textarea").forEach(function(e){ if(e.id) a.push(e.id); });
+  return a;
+}
+function radio(n){var e=document.querySelector('input[name="'+n+'"]:checked');return e?e.value:"";}
+function collect(){
+  var d={_radios:{ctx:radio("ctx"),consent:radio("consent"),pick:radio("pick")},_acc:acc};
+  ids().forEach(function(i){ d[i]=document.getElementById(i).value; });
+  return d;
+}
+function save(){
+  try{ localStorage.setItem(KEY, JSON.stringify(collect()));
+    document.getElementById("saved").textContent="đã lưu "+new Date().toLocaleTimeString("vi-VN");
+  }catch(e){}
+}
+function load(){
+  var raw; try{ raw=localStorage.getItem(KEY); }catch(e){}
+  if(!raw) return;
+  var d=JSON.parse(raw);
+  ids().forEach(function(i){ if(d[i]!==undefined) document.getElementById(i).value=d[i]; });
+  if(d._radios) for(var n in d._radios){
+    var v=d._radios[n]; if(!v) continue;
+    var e=document.querySelector('input[name="'+n+'"][value="'+v+'"]'); if(e) e.checked=true;
+  }
+  if(d._acc){ acc=d._acc; paint(); }
+}
+document.addEventListener("input", save);
+document.addEventListener("change", save);
+load(); paint();
+
+function wipe(){
+  if(!confirm("Xoá toàn bộ nội dung đã ghi?")) return;
+  try{ localStorage.removeItem(KEY); }catch(e){}
+  location.reload();
+}
+
+/* ---------- xuất markdown ---------- */
+function v(id){ var e=document.getElementById(id); return e && e.value.trim() ? e.value.trim() : ""; }
+function line(label,val){ return "- **"+label+":** " + (val || "_(không ghi)_") + "\n"; }
+function build(){
+  var m = "## Feedback Note — dữ liệu phiên test\n\n### Thông tin phiên\n";
+  m += line("Tester", v("s_tester"));
+  m += line("Ngày giờ", v("s_when"));
+  m += line("Thời lượng", v("s_dur"));
+  m += line("Relevant context", radio("ctx"));
+  m += line("Tester nói", v("s_ctxq"));
+  m += line("Xin phép ghi chú", radio("consent"));
+  m += line("Can thiệp kỹ thuật", v("s_intv"));
+  m += line("Thứ tự", "C → A → B");
+
+  m += "\n### Quan sát theo option\n";
+  OPTS.forEach(function(o){
+    m += "\n**"+o.t+"**\n";
+    FIELDS.forEach(function(f){ m += line(f[1].split(" — ")[0].split(":")[0], v(o.k+"_"+f[0])); });
+  });
+
+  m += "\n### Watchlist Option C\n";
+  m += line("Danh mục đã chọn và dấu hiệu dựa vào", v("w1"));
+  m += line("Paste code hay mô tả bằng lời", v("w2"));
+  m += line("Có kêu form dài không", v("w3"));
+  m += line("Thời gian điền xong form", v("w4"));
+  m += line("Phản ứng khi validation chặn", v("w5"));
+
+  m += "\n### So sánh\n";
+  m += line("Option được chọn", radio("pick"));
+  m += line("Lý do", v("c_why"));
+  m += line("Trade-off", v("c_trade"));
+  m += line("Tự làm phần nào / giao AI phần nào", v("c_split"));
+  m += line("Điều chưa thoải mái", v("c_uncomf"));
+
+  m += "\n### Quote nguyên văn\n";
+  [v("q1"),v("q2"),v("q3")].forEach(function(q){ if(q) m += "> " + q + "\n\n"; });
+  if(!v("q1") && !v("q2") && !v("q3")) m += "_(không ghi)_\n";
+
+  m += "\n### Evidence chống lại kỳ vọng của nhóm\n" + (v("c_against") || "_(không ghi)_") + "\n";
+  m += "\n### Tự đánh giá facilitate\n" + (v("f_self") || "_(không ghi)_") + "\n";
+  return m;
+}
+var dlg=document.getElementById("dlg");
+function showOut(){ document.getElementById("out").value = build(); dlg.showModal(); }
+function copyAll(){
+  var txt = build(), out = document.getElementById("out");
+  out.value = txt;
+  if(navigator.clipboard && window.isSecureContext){
+    navigator.clipboard.writeText(txt).then(function(){ alert("Đã copy. Dán vào chat là xong."); },fallback);
+  } else fallback();
+  function fallback(){
+    if(!dlg.open) dlg.showModal();
+    out.focus(); out.select();
+    try{ document.execCommand("copy"); alert("Đã copy."); }
+    catch(e){ alert("Bấm Ctrl+C để copy phần đang bôi đen."); }
+  }
+}
+</script>
+</body>
+</html>

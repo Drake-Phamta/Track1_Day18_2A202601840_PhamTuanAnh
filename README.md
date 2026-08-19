@@ -95,18 +95,19 @@ Ba option giữ nguyên **cùng** target user, situation, task, desired outcome 
 
 | Mục | Nội dung |
 | :--- | :--- |
-| Tester phiên của tôi | _(điền)_ — ngoài nhóm |
-| Relevant context | Có / Không / Một phần — _(điền)_ |
+| Tester phiên của tôi | **T-01** — ngoài nhóm, 19/08/2026 |
+| Relevant context | **Có** |
 | Thứ tự option | C → A → B |
-| Option được chọn | _(chờ kết quả)_ |
-| Breakdown chính | _(chờ kết quả)_ |
-| Evidence chống lại kỳ vọng của nhóm | _(chờ kết quả)_ |
+| Option được chọn | **C — Structured Support Form** |
+| Lý do tester nói ra | Được quyền chủ động mô tả lỗi |
+| Breakdown chính | Chỗ do dự duy nhất của cả phiên nằm ở **bản nháp do AI soạn trong Option A**; tester nói AI *mô tả chưa được chi tiết lỗi* và mình *cần chỉnh sửa nhiều* |
+| Evidence chống lại kỳ vọng của nhóm | Tester chọn option **không có AI** dù nó bắt gõ nhiều nhất. Điều họ muốn AI làm hẹp hơn những gì A và B đang làm: chỉ **tự nhận thông báo lỗi và quét đoạn code lỗi**, còn phần diễn đạt vấn đề thì giữ cho người |
 
 **Next Change nhóm chốt:** _(chờ đủ ba Feedback Notes)_
 
-**Evidence dẫn tới quyết định:** _(chờ)_
+**Ứng viên tôi sẽ đưa ra khi nhóm tổng hợp:** giữ cơ chế của C nhưng để hệ thống **tự quét và điền sẵn đoạn lỗi terminal**, giữ nguyên phần mô tả và phần chọn Coach cho người — đây là phần giao nhau giữa điều tester nói muốn và điều tester khó chịu.
 
-**Still Unproven sau ba feedback:** _(chờ)_
+**Still Unproven:** kết quả từ **một** tester; không ghi nhận được relevant context bằng lời tester và danh mục chọn ở Option C; chưa đo được thời gian ở A và B nên chưa so sánh được *nhanh hơn* mà nhóm giả định; chưa quan sát được tình huống **AI đoán sai** vì prototype dùng canned output.
 
 ---
 

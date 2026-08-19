@@ -1,29 +1,82 @@
-## 1. Bối cảnh & Mục tiêu thử nghiệm
-* **Case nghiên cứu:** Case C – AI Support Radar (Day 18 Lab).
-* **Nhóm thực hiện:** Nhóm Hello World (Nguyễn Ngọc Chi, Nguyễn Minh Hiếu, Phạm Tuấn Anh).
-* **Mục tiêu:** Đánh giá và so sánh trải nghiệm người dùng đối với 3 phương án thiết kế Human-AI (Option A: Thủ công/Rule-based, Option B: AI Co-pilot phối hợp, Option C: Ghép đôi bạn học ngang hàng).
+# Group Feedback Synthesis — Day 18
+
+**Nhóm:** Hello world · **Case:** C — AI Support Radar
+
+Chỉ điền phần này **sau khi đã có đủ ba Feedback Notes độc lập** từ ba tester ngoài nhóm. Nguồn form: [group/chang6.md](group/chang6.md).
 
 ---
 
-## 2. Bảng kỳ vọng hành vi (Pre-test Behavioural Expectations)
-| Tiêu chí | Option A (Manual) | Option B (Collaborative AI) | Option C (Peer Micro-Match) |
+## 1. Ba phiên test
+
+| | Feedback 1 | Feedback 2 | **Feedback 3** |
 | :--- | :--- | :--- | :--- |
-| **Thời gian phản hồi** | Chậm (giảng viên tốn thời gian lọc danh sách và tự soạn tin). | Nhanh (giảng viên duyệt 1-click dựa trên gợi ý của AI). | Tức thì (AI tự động kích hoạt real-time khi phát hiện kẹt bài). |
-| **Mức độ tin tưởng** | Cao (do con người tự tay kiểm soát 100% dữ liệu và câu từ). | Trung bình - Cao (giảng viên cần kiểm chứng xem AI chẩn đoán có chuẩn không). | Phụ thuộc vào tâm lý học viên (sự cởi mở vs cảm giác ngại ngùng). |
-| **Điểm nghẽn tiềm ẩn** | Giảng viên dễ bỏ sót học viên do lượng data thô quá lớn. | AI có thể chẩn đoán sai ngữ cảnh khiến tin nhắn draft bị lệch hướng. | Học viên có thể thấy bị làm phiền hoặc lo sợ lộ thông tin cá nhân. |
+| Người facilitate | | | **Phạm Tuấn Anh** |
+| Tester (tên hoặc mã) | | | |
+| Relevant context | Có / Không / Một phần | Có / Không / Một phần | Có / Không / Một phần |
+| Thứ tự option | A → B → C | B → C → A | **C → A → B** |
+| Có can thiệp kỹ thuật | | | |
+
+Thứ tự được counterbalance để giảm ảnh hưởng thứ tự — option cuối không được lợi vì tester đã quen bối cảnh.
 
 ---
 
-## 3. Findings from 3 Testers (Chờ cập nhật từ Chặng 5 & 6)
-> *[Placeholder: Ghi chú ghi chép thô, trích dẫn nguyên văn (quotes) và hành vi bấm/bỏ qua cụ thể của 3 tester khi tương tác với Option A, B, C sẽ được cập nhật ở đây sau buổi test.]*
+## 2. Bảng so ba feedback
+
+| Nội dung | Feedback 1 | Feedback 2 | Feedback 3 | Pattern hoặc khác biệt |
+| :--- | :--- | :--- | :--- | :--- |
+| First action | | | | |
+| Breakdown chính | | | | |
+| Evidence được đọc hay bỏ qua | | | | |
+| Cách lấy lại control | | | | |
+| Option được chọn | | | | |
+| Lý do và trade-off | | | | |
 
 ---
 
-## 4. Group Next Change (Chờ cập nhật từ Chặng 5 & 6)
-> *[Placeholder: Quyết định lựa chọn phương án phát triển chính và các tinh chỉnh thực tế dựa trên bằng chứng thu thập được sẽ được cập nhật ở đây.]*
+## 3. Một Next Change nhóm chốt
+
+*Chọn đúng một: giữ và sửa một option · kết hợp hai option nhưng giữ một cơ chế chính rõ ràng · bỏ một option · sửa cả ba rồi test tiếp.*
+
+
+
+## 4. Evidence dẫn tới quyết định
+
+*Phải trỏ được về observation cụ thể từ Feedback 1–3, không phải sở thích.*
+
+
+
+## 5. Still Unproven sau ba feedback
+
+*Điều chưa thể kết luận về value, mức độ nghiêm trọng, độ chính xác routing, sự chấp nhận việc theo dõi dữ liệu, hoặc hành vi ngoài prototype.*
+
+- Tần suất và thời lượng thật của việc Coach phải hỏi lại — ba phiên test không đo được.
+- Learner có chấp nhận để hệ thống đọc terminal và theo dõi lỗi trong phiên học hay không, khi dùng thật chứ không phải prototype.
+- 
 
 ---
 
-## 5. Still Unproven / Rủi ro chưa kiểm chứng
-* Mức độ quá tải thông báo đối với giảng viên nếu lớp học có quy mô lớn (>100 học viên cùng kích hoạt radar).
-* Liệu học viên giỏi có sẵn sàng duy trì việc hỗ trợ bạn học khác qua kênh chat ẩn danh trong dài hạn hay không?
+## 6. Handover cho iteration tiếp theo
+
+| Mục | Nội dung |
+| :--- | :--- |
+| Option hoặc cơ chế được giữ lại | |
+| Interaction cần sửa | |
+| Fixture / context cần giữ nguyên khi test lại | |
+| Tester / context cần tuyển tiếp | |
+| Observation cần kiểm tra lại | |
+
+---
+
+## Tự kiểm — GATE 5: Learning, not praise
+
+- [ ] Có ba Feedback Notes độc lập từ ba tester ngoài nhóm.
+- [ ] Mỗi tester đã dùng cả A/B/C với cùng context, task và desired outcome.
+- [ ] Mỗi note tách rõ OBSERVED và INTERPRETED.
+- [ ] Nhóm nêu được pattern hoặc khác biệt giữa ba người.
+- [ ] Nhóm chốt đúng một Next Change.
+- [ ] Nhóm ghi một điều STILL UNPROVEN.
+- [ ] Không dùng câu *ba tester thích B* nếu thiếu hành vi, lý do và trade-off đi kèm.
+
+**Không kết luận:** *User đã xác nhận solution này đúng.*
+
+**Cách kết luận phù hợp:** *Với Hypothesis Problem này, chúng tôi đã thử ba cách giải. Tester đã làm…, vì vậy iteration tiếp theo chúng tôi sẽ…; điều vẫn chưa được chứng minh là…*

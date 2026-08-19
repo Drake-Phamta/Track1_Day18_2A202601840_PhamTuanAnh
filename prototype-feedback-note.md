@@ -11,16 +11,16 @@ Phiếu ghi nhanh dùng trong lúc chạy phiên: [prep/phieu-ghi-test.md](prep/
 
 ## 1. Thông tin phiên test
 
-| Mục | Nội dung |
-| :--- | :--- |
-| Người test | **T-01** — ngoài nhóm |
-| Ngày / giờ | 19/08/2026, 9:33 |
-| Thời lượng | _không ghi nhận_ |
-| Tester có relevant context | **Có** |
-| Relevant context ngắn — bằng lời tester | _không ghi nhận_ |
-| Thứ tự option | **C → A → B** |
-| Có can thiệp kỹ thuật không | _không ghi nhận_ |
-| Đã xin phép ghi chú | **Có** |
+| Mục                                        | Nội dung                      |
+| :------------------------------------------ | :----------------------------- |
+| Người test                                | **T-01** — ngoài nhóm |
+| Ngày / giờ                                | 19/08/2026, 9:33               |
+| Thời lượng                               |                                |
+| Tester có relevant context                 | **Có**                  |
+| Relevant context ngắn — bằng lời tester | _không ghi nhận_           |
+| Thứ tự option                             | **C → A → B**          |
+| Có can thiệp kỹ thuật không            | _không ghi nhận_           |
+| Đã xin phép ghi chú                     | **Có**                  |
 
 **Câu hỏi relevant context** — hỏi trong tối đa 2 phút, không giới thiệu trước A/B/C:
 
@@ -42,20 +42,20 @@ Phiếu ghi nhanh dùng trong lúc chạy phiên: [prep/phieu-ghi-test.md](prep/
 
 ## 3. Quan sát theo từng option
 
-| Observation | **Option C** (Manual Form) | **Option A** (AI Context) | **Option B** (AI Routing) |
-| :--- | :--- | :--- | :--- |
-| **First action** | Bấm vào *Yêu cầu hỗ trợ* | Vẫn bấm vào *Yêu cầu hỗ trợ* | Bấm *Có, kết nối ngay* |
-| **Chỗ dừng, do dự hoặc hiểu sai** | Không có sự do dự | **Có do dự ở phần mô tả do AI soạn**; tester nói lý do là *layout design chưa thông minh* | Không do dự |
-| **Evidence được đọc hay bỏ qua** | Có đọc lỗi nhưng chưa tự fix được nên cần Lab Coach | Có đọc lỗi, đọc lý do, và chọn tên Lab Coach | Đọc hết |
-| **Cách lấy lại control** | Có tìm thấy | Vẫn dễ dàng tìm thấy | Có tìm thấy |
+| Observation                                  | **Option C** (Manual Form)                                | **Option A** (AI Context)                                                                               | **Option B** (AI Routing) |
+| :------------------------------------------- | :-------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------ | :------------------------------ |
+| **First action**                       | Bấm vào*Yêu cầu hỗ trợ*                                 | Vẫn bấm vào*Yêu cầu hỗ trợ*                                                                          | Bấm*Có, kết nối ngay*     |
+| **Chỗ dừng, do dự hoặc hiểu sai** | Không có sự do dự                                           | **Có do dự ở phần mô tả do AI soạn**; tester nói lý do là *layout design chưa thông minh* | Không do dự                   |
+| **Evidence được đọc hay bỏ qua** | Có đọc lỗi nhưng chưa tự fix được nên cần Lab Coach | Có đọc lỗi, đọc lý do, và chọn tên Lab Coach                                                        | Đọc hết                      |
+| **Cách lấy lại control**            | Có tìm thấy                                                  | Vẫn dễ dàng tìm thấy                                                                                     | Có tìm thấy                  |
 
-| | |
-| :--- | :--- |
-| **Option được chọn** | **C** |
-| **Lý do tester nói ra** | Được quyền chủ động mô tả lỗi |
-| **Trade-off tester nói ra** | AI có gợi ý, tiện hơn và nhanh hơn, nhưng chưa thể hiện rõ được nhu cầu mong muốn của tester |
-| **Muốn tự làm phần nào, giao AI phần nào** | Chỉ muốn AI tự nhận các thông báo lỗi; phần mô tả chi tiết tester muốn tự đảm nhiệm |
-| **Điều chưa thoải mái ở phương án đã chọn** | Đoạn paste code lỗi — muốn AI tự động quét thay vì phải dán tay |
+|                                                               |                                                                                                                |
+| :------------------------------------------------------------ | :------------------------------------------------------------------------------------------------------------- |
+| **Option được chọn**                                | **C**                                                                                                    |
+| **Lý do tester nói ra**                               | Được quyền chủ động mô tả lỗi                                                                        |
+| **Trade-off tester nói ra**                            | AI có gợi ý, tiện hơn và nhanh hơn, nhưng chưa thể hiện rõ được nhu cầu mong muốn của tester |
+| **Muốn tự làm phần nào, giao AI phần nào**       | Chỉ muốn AI tự nhận các thông báo lỗi; phần mô tả chi tiết tester muốn tự đảm nhiệm           |
+| **Điều chưa thoải mái ở phương án đã chọn** | Đoạn paste code lỗi — muốn AI tự động quét thay vì phải dán tay                                    |
 
 ### Evidence chống lại kỳ vọng của nhóm
 
@@ -75,12 +75,12 @@ Nhóm đi vào Day 18 với giả định ngầm rằng **AI trích xuất và s
 
 *Đặt trước khi test, dựa trên annotation Option C trong [group/chang4.md](group/chang4.md). Không đọc cho tester nghe.*
 
-| Điều cần quan sát | Ghi nhận |
-| :--- | :--- |
-| Tester chọn danh mục nào, dựa vào dấu hiệu gì | _không ghi nhận_ |
-| Có paste code lỗi không, hay chỉ mô tả bằng lời | **Có paste lỗi** |
-| Có thấy form dài hoặc rắc rối không | Vừa đủ |
-| Mất bao lâu để điền xong form | Khoảng **1 phút** |
+| Điều cần quan sát                                          | Ghi nhận                                                                                         |
+| :------------------------------------------------------------- | :------------------------------------------------------------------------------------------------ |
+| Tester chọn danh mục nào, dựa vào dấu hiệu gì          | _không ghi nhận_                                                                              |
+| Có paste code lỗi không, hay chỉ mô tả bằng lời        | **Có paste lỗi**                                                                          |
+| Có thấy form dài hoặc rắc rối không                     | Vừa đủ                                                                                         |
+| Mất bao lâu để điền xong form                            | Khoảng**1 phút**                                                                          |
 | Phản ứng khi validation chặn vì thiếu trường bắt buộc | Không thấy phiền — tester cho rằng đó là những trường cần thiết để Lab Coach hiểu |
 
 ---

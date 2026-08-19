@@ -11,16 +11,16 @@ Phiếu ghi nhanh dùng trong lúc chạy phiên: [prep/phieu-ghi-test.md](prep/
 
 ## 1. Thông tin phiên test
 
-| Mục                                        | Nội dung                        |
-| :------------------------------------------ | :------------------------------- |
-| Người test                                | **T-01** — ngoài nhóm   |
-| Ngày / giờ                                | 19/08/2026, 9:33                 |
-| Thời lượng                               | 10 phút                         |
-| Tester có relevant context                 | **Có**                    |
-| Relevant context ngắn — bằng lời tester | Tôi có gặp khăn trong quá  |
-| Thứ tự option                             | **C → A → B**            |
-| Có can thiệp kỹ thuật không            | _không ghi nhận_             |
-| Đã xin phép ghi chú                     | **Có**                    |
+| Mục                                        | Nội dung                                      |
+| :------------------------------------------ | :--------------------------------------------- |
+| Người test                                | **T-01** — ngoài nhóm                 |
+| Ngày / giờ                                | 19/08/2026, 9:33                               |
+| Thời lượng                               | 10 phút                                       |
+| Tester có relevant context                 | **Có**                                  |
+| Relevant context ngắn — bằng lời tester | Tôi có gặp khăn trong quá trình làm Lab |
+| Thứ tự option                             | **C → A → B**                          |
+| Có can thiệp kỹ thuật không            | Không                                         |
+| Đã xin phép ghi chú                     | **Có**                                  |
 
 **Câu hỏi relevant context** — hỏi trong tối đa 2 phút, không giới thiệu trước A/B/C:
 
@@ -130,7 +130,7 @@ Chưa chốt — mới có một trong ba Feedback Note. Ứng viên tôi sẽ �
 ### STILL UNPROVEN
 
 - Kết quả này đến từ **một** tester. Chưa biết hai phiên còn lại có cùng hướng hay không.
-- **Không ghi nhận được relevant context bằng lời tester**, nên chưa kiểm chứng được trải nghiệm nền của họ khớp tới đâu với case của nhóm.
+- Relevant context chỉ ghi được ở mức chung (*có gặp khó khăn khi làm Lab*), **chưa neo vào một buổi cụ thể có mốc thời gian**, nên chưa kiểm chứng được trải nghiệm nền của tester khớp tới đâu với case của nhóm.
 - **Không ghi nhận được danh mục tester chọn ở Option C và dấu hiệu họ dựa vào** — đây đúng là chỗ kiểm tra xem rule routing có chạy đúng không, và nó vẫn còn trống.
 - Không đo được thời gian ở Option A và B nên chưa so sánh được *nhanh hơn* mà nhóm giả định.
 - Chưa biết tester phản ứng thế nào khi **AI đoán sai** — prototype dùng canned output nên không có tình huống sai để quan sát.
@@ -142,7 +142,7 @@ Chưa chốt — mới có một trong ba Feedback Note. Ứng viên tôi sẽ �
 
 Tôi không vi phạm luật facilitation trong phiên này.
 
-*Chỗ cần làm tốt hơn ở phiên sau:* ba mục bị bỏ trống — thời lượng phiên, câu trả lời relevant context bằng lời tester, và danh mục tester chọn ở Option C — đều là dữ liệu phải ghi ngay lúc chạy, không hồi cứu được. Riêng danh mục ở Option C là watchlist do chính tôi đặt ra trước phiên mà lại quên ghi.
+*Chỗ cần làm tốt hơn ở phiên sau:* câu relevant context tôi chỉ thu được câu trả lời chung (*có gặp khó khăn khi làm Lab*) mà không neo tiếp vào một buổi cụ thể — đúng lỗi tôi đã tự ghi nhận ở Day 17 và vẫn lặp lại. Và **danh mục tester chọn ở Option C** là watchlist do chính tôi đặt ra trước phiên, nhưng lúc chạy lại quên ghi; đây là chỗ duy nhất kiểm được rule routing có chạy đúng không.
 
 ---
 

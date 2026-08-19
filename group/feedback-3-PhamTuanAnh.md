@@ -11,9 +11,9 @@
 - **Ngày/giờ:** 19/08/2026, 9:33
 - **Thời lượng:** 10 phút
 - **Tester có relevant context:** **Có**
-- **Relevant context ngắn:** _chưa ghi nhận bằng lời tester — đang hỏi lại_
+- **Relevant context ngắn:** Tester nói có gặp khó khăn trong quá trình làm Lab _(ghi vắn tắt, chưa neo vào một buổi cụ thể)_
 - **Thứ tự option:** **C → A → B**
-- **Có can thiệp kỹ thuật không:** _chưa ghi nhận_
+- **Có can thiệp kỹ thuật không:** **Không**
 - **Đã xin phép ghi chú:** Có
 
 ---
@@ -85,7 +85,7 @@ Nhóm nghĩ điều đó có thể có nghĩa gì? *(hypothesis, chưa phải k�
 ### STILL UNPROVEN
 
 - Kết quả đến từ **một** tester; chưa biết hai phiên còn lại có cùng hướng không.
-- Chưa ghi nhận được relevant context bằng lời tester, nên chưa kiểm chứng trải nghiệm nền của họ khớp tới đâu với case của nhóm.
+- Relevant context chỉ ghi được ở mức chung (*có gặp khó khăn khi làm Lab*), chưa neo vào một buổi cụ thể có mốc thời gian, nên chưa kiểm chứng được trải nghiệm nền của tester khớp tới đâu với case của nhóm.
 - Chưa ghi nhận được danh mục tester chọn ở Option C và dấu hiệu họ dựa vào — đây là chỗ kiểm rule routing có chạy đúng không.
 - Không đo được thời gian ở Option A và B nên chưa so sánh được *nhanh hơn* mà nhóm giả định.
 - Chưa quan sát được phản ứng khi **AI đoán sai** — prototype dùng canned output nên không có tình huống sai.
@@ -93,4 +93,4 @@ Nhóm nghĩ điều đó có thể có nghĩa gì? *(hypothesis, chưa phải k�
 
 ---
 
-*Ba mục ghi `chưa ghi nhận` đang được hỏi lại tester và sẽ bổ sung; nếu bổ sung, sẽ đánh dấu rõ là **thu thập sau phiên test** để không lẫn với quan sát tại chỗ.*
+*Mục còn ghi `chưa ghi nhận` (danh mục chọn ở Option C) đang được hỏi lại tester và sẽ bổ sung; nếu bổ sung, sẽ đánh dấu rõ là **thu thập sau phiên test** để không lẫn với quan sát tại chỗ.*

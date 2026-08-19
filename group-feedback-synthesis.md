@@ -15,7 +15,7 @@ Chỉ điền phần này **sau khi đã có đủ ba Feedback Notes độc lậ
 | Ngày | | | 19/08/2026 |
 | Relevant context | Có / Không / Một phần | Có / Không / Một phần | **Có** |
 | Thứ tự option | A → B → C | B → C → A | **C → A → B** |
-| Có can thiệp kỹ thuật | | | _không ghi nhận_ |
+| Có can thiệp kỹ thuật | | | **Không** |
 
 Thứ tự được counterbalance để giảm ảnh hưởng thứ tự — option cuối không được lợi vì tester đã quen bối cảnh.
 

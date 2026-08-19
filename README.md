@@ -1,100 +1,126 @@
-# Track 1 - Day 18: Human-AI Design Options for AI Support Radar
+# Track 1 — Day 18: Multiple Prototypes & Human-AI Design
 
-> **Mã Học Viên (MHV):** `2A202601840`  
-> **Họ và Tên:** Phạm Tuấn Anh  
-> **Tên Thư Mục Repository:** `Track1_Day18_2A202601840_PhamTuanAnh`  
-> **Link Prototype:** [https://drake-phamta.github.io/Track1_Day18_2A202601840_PhamTuanAnh/](https://drake-phamta.github.io/Track1_Day18_2A202601840_PhamTuanAnh/)
+> **Mã Học Viên (MHV):** `2A202601840`
+> **Họ và Tên:** Phạm Tuấn Anh
+> **Tên Thư Mục Repository:** `Track1_Day18_2A202601840_PhamTuanAnh`
+> **Link Prototype:** https://drake-phamta.github.io/Track1_Day18_2A202601840_PhamTuanAnh/
 
 ---
 
 ## 1. Thông Tin Cá Nhân và Nhóm
+
 - **Mã Học Viên (MHV):** `2A202601840`
 - **Họ và Tên:** Phạm Tuấn Anh
 - **Tên Nhóm:** Hello world
 - **Danh Sách 3 Thành Viên:**
-  1. **Nguyễn Ngọc Chi** (MHV: `2A202602024`) 
-  2. **Nguyễn Minh Hiếu** (MHV: `2A202601154`) 
-  3. **Phạm Tuấn Anh** (MHV: `2A202601840`) 
-- **Case Study / Đề Tài:** Case C — AI Support Radar & Smart Context Routing cho Học viên thực hành Giải thuật (VLearn LMS)
+  1. Nguyễn Ngọc Chi (MHV: `2A202602024`)
+  2. Nguyễn Minh Hiếu (MHV: `2A202601154`)
+  3. Phạm Tuấn Anh (MHV: `2A202601840`)
+- **Case Study:** Case C — AI Support Radar · chuyển giao yêu cầu hỗ trợ có đủ bối cảnh và đúng chuyên môn trên VLearn LMS
+- **Option tôi phụ trách:** **Option C — Structured Support Form (No AI)**
 
 ---
 
-## 2. Hypothesis Problem (Bản nhóm dùng trong Day 18)
-- **Vấn Đề Gốc (Problem Statement):** Khi học viên thực hành giải thuật bị kẹt lỗi kỹ thuật (`Segmentation Fault` do thiếu Base Case đệ quy trong bài Cây nhị phân BST Slide 8) và cần chuyển giao yêu cầu hỗ trợ, quá trình xử lý bị kéo dài và gián đoạn.
-- **Giả Thuyết Trung Tâm (Core Hypothesis):** **Giảng viên/Lab Coach** gặp khó khăn trong việc xác định nhanh học viên đang ở bước nào và ai nên tiếp nhận hỗ trợ vì **yêu cầu của học viên thường thiếu/lan man về bối cảnh kỹ thuật và có thể đến nhầm Coach chuyên môn** (do học viên ngại hỏi hoặc không biết phân loại lỗi), dẫn đến **Coach phải tốn nhiều thời gian hỏi follow-up từ đầu hoặc rà soát từng bàn trước khi bắt đầu hỗ trợ**.
-- **Đối Tượng Người Dùng Mục Tiêu (Target User):** 
-  - *Primary User:* Lab Coach (người triage và tiếp nhận hỗ trợ đúng chuyên môn).
-  - *Supporting Actor:* Learner (người thực hành bị kẹt lỗi và nhận hướng dẫn).
-- **Kết Quả Mong Đợi (Expected Outcome):** Giảm thời gian chờ đợi và hỏi lại bối cảnh; đưa đúng câu hỏi tới đúng Coach chuyên môn trong vòng dưới 1 phút mà không làm đứt mạch học của học viên.
+## 2. Hypothesis Problem (bản nhóm dùng trong Day 18)
+
+> Khi learner đang mắc lỗi trong buổi lab và cần chuyển yêu cầu hỗ trợ (**situation**), **Lab Coach** (**user**) gặp khó khăn trong việc xác định nhanh learner đang ở bước nào và ai nên tiếp nhận (**job**) vì **yêu cầu thường thiếu hoặc lan man về bối cảnh và có thể đến nhầm coach** (**barrier**), dẫn đến **Coach phải hỏi follow-up hoặc đi tìm từng bàn trước khi bắt đầu hỗ trợ** (**consequence**).
+
+**Vai trò dùng trong Day 18**
+- *Primary user:* Lab Coach — người cần triage và bắt đầu hỗ trợ.
+- *Supporting actor:* Learner — người cung cấp hoặc xác nhận context trước khi yêu cầu được chuyển đi.
+
+**Evidence ban đầu hỗ trợ giả thuyết** — từ ba Practice Notes của Day 17:
+
+| Nguồn | Điều user đã thực sự làm hoặc nói |
+| :--- | :--- |
+| Practice Note 1 — Hiếu (Learner) | Nhắn Discord gọi Lab Coach, chờ 3–4 phút, tốn thêm thời gian vì Coach phải *"load lại thông tin từ đầu"*; learner thấy *"nản"* |
+| **Practice Note 2 — Tuấn Anh (Learner)** | Đọc note không hiểu là *"la lên"* hoặc nhắn Discord ngay; Coach tiếp cận nhưng *"không phải phần đảm nhiệm chính"* nên giải thích không thỏa đáng |
+| Practice Note 3 — Chi (Lab Coach) | Phải đoán hoặc đi bộ rà soát từng bàn; câu hỏi nhận được thường *"đại hải"*, phải *"hỏi follow-up lại"* nhiều lượt |
+
+**Điều nhóm bất ngờ:** giả định ban đầu là *instructor khó phát hiện ai cần hỗ trợ* hoặc *learner ngại hỏi*. Thực tế có learner rất chủ động — điểm gãy nằm ở **bước ngay sau đó**: quy trình tiếp nhận thiếu bối cảnh và điều phối nhầm người.
+
+**Điều vẫn chưa được chứng minh**
+- Tần suất và thời lượng trung bình của việc hỏi lại hoặc đi tìm learner chưa được đo lường.
+- Chưa biết chậm trễ này có làm learner trễ tiến độ, đổi workaround hay bỏ dở bài không.
+- Chưa biết learner có chấp nhận việc hệ thống đọc terminal hoặc theo dõi lỗi trong phiên học không.
+
+Chi tiết: [group/chang1.md](group/chang1.md)
 
 ---
 
-## 3. Three Solution Options (Mô tả ngắn & Link Prototype)
+## 3. Three Solution Options
 
-### 🎨 Option A: Standard — Manual / Rule-based Dashboard (AI Context Extractor)
-- **Cơ chế (Mechanism):** Khi học viên bấm nút "Yêu cầu hỗ trợ", AI tự động quét log terminal/màn hình code để trích xuất thông báo lỗi `Segmentation Fault` tại `bst.cpp` (Slide 8) và soạn sẵn draft ticket. Học viên tự kiểm tra, chỉnh sửa bối cảnh và tự chọn Coach từ danh sách trước khi gửi.
-- **Role / Trigger:** User-Initiated (Học viên tự bấm nút hỗ trợ) | Chế độ AI: Ask/Assist (AI chỉ gợi ý draft context, học viên duyệt và tự chọn Coach).
-- **Prototype Link:** [Option A Live Prototype](https://drake-phamta.github.io/Track1_Day18_2A202601840_PhamTuanAnh/) *(Chọn Tab Option A trên Header)*
+Ba option giữ nguyên **cùng** target user, situation, task, desired outcome và content fixture. Khác nhau ở **cơ chế và cách chia việc giữa người với AI**.
 
-### 🎨 Option B: Standard++ — Collaborative AI Co-pilot Support (AI Support Radar)
-- **Cơ chế (Mechanism):** AI âm thầm phân tích telemetry phiên học (phát hiện học viên chạy code crash `Segmentation Fault` 3 lần liên tiếp hoặc dừng ở Slide 8 > 14 phút), chẩn đoán lỗ hổng đệ quy và đưa ra pop-up gợi ý đúng Coach B (DevOps/Giải thuật C++) kèm bối cảnh soạn sẵn để học viên duyệt 1-click.
-- **Role / Trigger:** AI-Initiated (AI Radar tự kích hoạt khi phát hiện tín hiệu bị kẹt) | Chế độ AI: Ask/Suggest (AI đề xuất bối cảnh và Coach, chờ học viên xác nhận hoặc từ chối).
-- **Prototype Link:** [Option B Live Prototype](https://drake-phamta.github.io/Track1_Day18_2A202601840_PhamTuanAnh/) *(Chọn Tab Option B trên Header)*
+**Fixture dùng chung:** VLearn Lab Day 5 — Environment Setup. Learner chạy `npm run dev` gặp `Error: NEXT_PUBLIC_API_KEY is not defined` tại `lib/api.js:12`. Hai Coach trực ca: Le Thi Hoa (Frontend/UI) và Nguyen Duc Minh (DevOps/Môi trường).
 
-### 🎨 Option C: Wild — Peer Micro-Match (Kết nối bạn học tức thì)
-- **Cơ chế (Mechanism):** Hệ thống AI đóng vai trò môi giới real-time, tự động ghép nối ẩn danh học viên đang bị kẹt lỗi BST với một bạn học cùng lớp vừa giải bài xuất sắc. Hệ thống mở cửa sổ Mini-Chat 3 phút để hai bạn học tự hỗ trợ gỡ lỗi đệ quy mà không cần chờ Coach.
-- **Role / Trigger:** AI-Initiated / Event-Driven (Tự động kích hoạt khi dừng kẹt lỗi) | Chế độ AI: Act with Confirmation (AI mở kết nối ghép đôi ngay khi cả 2 học viên bấm đồng ý).
-- **Prototype Link:** [Option C Live Prototype](https://drake-phamta.github.io/Track1_Day18_2A202601840_PhamTuanAnh/) *(Chọn Tab Option C trên Header)*
+| | **Option A** — User-Initiated + AI Context | **Option B** — AI-Initiated + User Confirms | **Option C** — No AI / Manual Form |
+| :--- | :--- | :--- | :--- |
+| Cơ chế | AI Context Extractor: learner bấm *Yêu cầu hỗ trợ*, AI quét màn hình/terminal và tạo bản nháp; learner tự chọn người nhận | AI Support Radar + Smart Routing: AI phát hiện lỗi lặp lại trong phiên, phân tích tín hiệu và đề xuất Coach qua pop-up | Structured Support Form: learner tự chọn danh mục, mô tả tình huống và paste lỗi; hệ thống chuyển theo rule có sẵn |
+| User làm gì | Bấm hỗ trợ, review và sửa bản nháp, tự chọn Coach rồi gửi | Đọc tín hiệu AI, xác nhận hoặc dismiss | Tự phân loại, điền context và gửi form |
+| AI làm gì | Chỉ trích xuất và tóm tắt; **không** route | Theo dõi tín hiệu, phân tích, đề xuất Coach; **không** tự gửi | **Không có AI suy đoán** — chỉ rule định tuyến theo danh mục user chọn |
+| Trigger | Learner bấm nút | AI tự phát hiện: chạy code lỗi 3 lần liên tiếp hoặc kẹt ở một slide quá 5 phút | Learner bấm nút |
+| Trade-off chính | Giảm gánh nặng mô tả nhưng learner vẫn phải biết chọn đúng Coach; rủi ro AI tóm tắt sai hoặc thừa | Giảm thao tác và route sớm hơn, nhưng rủi ro làm phiền và cảm giác bị theo dõi; độ chính xác chưa được chứng minh | Dễ giải thích, không có rủi ro AI đoán sai, nhưng thêm ma sát và đặt gánh nặng phân loại lên learner |
 
-> 📌 Chi tiết Bảng So sánh 3 Options & Human-AI Decision Table: Xem file [three-option-design-sheet.md](three-option-design-sheet.md)
+**Distance check**
+- **A khác B vì** A chỉ khởi động sau khi learner chủ động yêu cầu và AI chỉ tạo context, learner vẫn chọn Coach; B chủ động phát hiện tín hiệu kẹt và AI đề xuất cả Coach.
+- **B khác C vì** B dùng tín hiệu hành vi để đề xuất route, còn C không suy đoán và buộc learner tự chọn danh mục, mô tả và cung cấp bằng chứng.
+- **A khác C vì** cả hai đều do learner trigger, nhưng A dùng AI trích xuất context còn C yêu cầu learner nhập tay; A vẫn để learner chọn người nhận.
+
+**Prototype:** [index.html](index.html) — chọn tab A / B / C. Chi tiết: [three-option-design-sheet.md](three-option-design-sheet.md) · [prototype-link.md](prototype-link.md)
 
 ---
 
 ## 4. Đóng Góp Của Cá Nhân Trong Nhóm
-*Chi tiết phân công nhiệm vụ và vai trò của học viên **Phạm Tuấn Anh** (MHV: `2A202601840`) trong dự án nhóm:*
 
-- [x] **Phụ trách Solution Option C — Peer Micro-Match (Wild):** Thiết kế cơ chế ghép nối ngang hàng thay cho luồng ticket truyền thống tới Coach. Quy định chế độ **Act with Confirmation** với opt-in hai phía — học viên bị kẹt chấp nhận match, bạn học được gợi ý giữ quyền Opt-in/Opt-out — để tốc độ ghép đôi không đánh đổi bằng quyền tự quyết của cả hai người.
-- [x] **Xây dựng luồng tương tác Option C trong [index.html](index.html):**
-  - Dải trạng thái *"AI Co-learning Peer Match Active"* ở khung học viên, báo cho người dùng biết radar ghép đôi đang bật trước khi nó hành động.
-  - Widget nổi góc dưới bên phải đề xuất kết nối với bạn Trần Minh — bạn học vừa pass bài BST Slide 8.
-  - Luồng `openPeerChatC()` mở phiên **chat ẩn danh 3 phút**, kèm hàng đợi tin nhắn, phản hồi của peer và bộ đếm tự đóng phiên khi hết giờ.
-  - **Dashboard Giám Sát Học Nhóm Ngang Hàng (Peer Learning Monitor)** ở vai Giảng viên, để Coach vẫn nhìn được lớp đang tự hỗ trợ nhau tới đâu.
-- [x] **Điền cột Option C trong Human-AI Decision Table** ([three-option-design-sheet.md](three-option-design-sheet.md)): mental model *Social Peer Matcher*; phân chia việc giữa Algorithmic Matcher và hai học viên; quyền Opt-in/Opt-out; và đường phục hồi **Escalate to Coach** khi bạn học giải thích sai hoặc không phản hồi.
-- [x] **Góp luận điểm Distance Check:** chỉ ra *B khác C* ở chỗ B giữ luồng **Expert-Student Support** còn C bứt sang **Peer-to-Peer Micro-Matching** không qua ticket của Coach; và *A khác C* ở chỗ A chuẩn hoá công cụ cá nhân còn C xã hội hoá việc gỡ lỗi.
-- [x] **Mang evidence Day 17 vào Hypothesis Problem của nhóm:** vế *"yêu cầu có thể đến nhầm Coach chuyên môn"* xuất phát từ interview learner (L-01) do tôi thực hiện ở Day 17 — nguyên văn: *"Có một vài lần mình raise lên rồi mình hỏi, nhưng mà các anh ấy… phần đó không phải phần đảm nhiệm chính của các anh ấy. Các anh ấy cũng chưa trả lời cho mình thỏa đáng."*
-- [x] **Facilitate một phiên Usability Testing** với người ngoài nhóm và ghi [prototype-feedback-note.md](prototype-feedback-note.md).
+*Trình bày theo bảng phân công chung/riêng của BTC. Trọng tâm của tôi xuyên suốt sáu chặng là **Option C — Structured Support Form** và **Practice Note 2**.*
+
+| Chặng | Nhóm làm chung | **Phần tôi làm riêng** |
+| :--- | :--- | :--- |
+| **1 — Evidence** | Đọc 3 Practice Notes, chọn evidence, chốt Hypothesis Problem | Cung cấp và giải thích **Practice Note 2** — interview learner do tôi thực hiện ở Day 17. Diễn giải từ note này, rằng điểm nghẽn nằm ở khâu routing sai người hỗ trợ chứ không phải ở việc learner ngại hỏi, trở thành **barrier** trong Hypothesis Problem của nhóm |
+| **2 — Solution Options** | Chọn A/B/C, khoá chung user, situation, task, content fixture, desired outcome | Nhận **Option C — Structured Support Form**; lập luận vì sao nhóm cần một option **không dùng AI** làm đối chứng thay vì ba option đều có AI |
+| **3 — Human-AI Design** | Cùng lập Decision Table cho cả A/B/C | Đào sâu **cột Option C**: agency **Don't infer** — rule chỉ chạy sau khi user submit đủ trường bắt buộc; không hiển thị Coach mapping trước khi user chọn để form không biến thành lời giải; đường phục hồi khi learner chọn nhầm danh mục |
+| **4 — Build** | Dùng chung context, fixture, visual components và chuẩn hoá flow | Build **Option C** trong prototype: danh mục lỗi, ô mô tả tình huống, ô paste code lỗi, validation trường bắt buộc, rule routing sau submit, nút reset về common context |
+| **5 — Test preparation** | Chốt chung relevant context, outcome task, 5 observation focus và luật facilitation | Chuẩn bị cách ghi Feedback Note cho tester của mình, kèm **watchlist riêng cho Option C**: tester chọn danh mục dựa vào dấu hiệu nào, có paste code hay chỉ mô tả bằng lời, có thấy form dài quá không, mất bao lâu để điền xong |
+| **6 — Test & synthesis** | Tổng hợp 3 Feedback Notes và chốt Group Next Change | **Test cả A/B/C với 1 tester ngoài nhóm** theo thứ tự **C → A → B** và ghi [prototype-feedback-note.md](prototype-feedback-note.md) |
+
+**Vì sao Option C tồn tại.** C là option **không dùng AI** duy nhất, và trong Human-AI Decision Table nó là ô **Don't infer** duy nhất. Không có nó thì nhóm không có đối chứng để biết AI ở A và B thật sự thêm giá trị, hay chỉ làm giao diện nhìn hiện đại hơn. Đây cũng là option chịu áp lực ngược: nếu tester vẫn chọn C dù phải điền tay nhiều hơn, thì giả định *learner muốn AI làm hộ* của nhóm cần được xem lại.
 
 ---
 
 ## 5. Prototype Feedback & Testing Synthesis
 
-- **Ghi chép quan sát phiên do tôi facilitate:** [prototype-feedback-note.md](prototype-feedback-note.md)
-- **Báo cáo tổng hợp phản hồi cả nhóm:** [group-feedback-synthesis.md](group-feedback-synthesis.md)
+- **Ghi chép phiên do tôi facilitate:** [prototype-feedback-note.md](prototype-feedback-note.md)
+- **Tổng hợp cả nhóm:** [group-feedback-synthesis.md](group-feedback-synthesis.md)
 
 | Mục | Nội dung |
 | :--- | :--- |
-| Tester phiên của tôi | Bách (ngoài nhóm) |
-| Thứ tự dùng | C → A → B *(đảo thứ tự giữa ba phiên để option cuối không được lợi vì tester đã quen bối cảnh)* |
-| Option được chọn | _(chờ kết quả phiên test)_ |
-| Breakdown đáng chú ý nhất | _(chờ kết quả phiên test)_ |
-| Evidence chống lại kỳ vọng của nhóm | _(chờ kết quả phiên test)_ |
+| Tester phiên của tôi | _(điền)_ — ngoài nhóm |
+| Relevant context | Có / Không / Một phần — _(điền)_ |
+| Thứ tự option | C → A → B |
+| Option được chọn | _(chờ kết quả)_ |
+| Breakdown chính | _(chờ kết quả)_ |
+| Evidence chống lại kỳ vọng của nhóm | _(chờ kết quả)_ |
 
-**Next Change nhóm chốt:** _(chờ Group Feedback Synthesis sau khi đủ ba Feedback Notes)_
+**Next Change nhóm chốt:** _(chờ đủ ba Feedback Notes)_
 
-**Evidence dẫn tới quyết định đó:** _(chờ)_
+**Evidence dẫn tới quyết định:** _(chờ)_
 
-**Still Unproven — điều chưa thể kết luận từ ba người:**
-- Phản ứng dài hạn với cơ chế ghép đôi khi số học viên "vừa pass bài" trong lớp biến động — một phiên test không đo được.
-- Chất lượng giải thích của peer so với Coach: prototype dùng canned output nên chưa kiểm được trường hợp bạn học giải thích sai.
-- Mức độ e ngại khi lộ code cho bạn cùng lớp ở lớp học thật, nơi hai người biết nhau chứ không ẩn danh hoàn toàn.
+**Still Unproven sau ba feedback:** _(chờ)_
 
 ---
 
-## 6. AI Support Log & Human-in-the-Loop Summary
+## 6. AI Support Log
 
-> Chi tiết đầy đủ tại [ai-support-log.md](ai-support-log.md).
+Chi tiết: [ai-support-log.md](ai-support-log.md)
 
-- **Công cụ AI đã dùng:** Claude Code (Claude Opus).
-- **AI đã giúp ở đâu:** đọc lại và hệ thống hoá tài liệu Day 16–17 của tôi thành evidence snapshot mang vào Chặng 1; dựng một bản chuẩn bị riêng trước buổi (khung ba option theo hai trục *ai khởi xướng / ai viết ngữ cảnh* kèm prototype HTML) — **bản này cuối cùng không dùng** vì nhóm chốt hướng khác; hỗ trợ chuyển repo fork của nhóm thành bài nộp cá nhân; soạn khung kịch bản test và biểu mẫu quan sát.
-- **Điểm AI sai / hời hợt:** _(chờ tôi tự đánh giá sau khi hoàn tất bài)_
-- **Can thiệp của tôi:** _(chờ)_
+- **Công cụ:** Claude Code (Claude Opus).
+- **AI đã giúp ở đâu:** hệ thống hoá tài liệu Day 16–17 của tôi thành evidence snapshot mang vào Chặng 1; dựng bản chuẩn bị riêng trước buổi, sau không dùng đến vì nhóm chốt hướng khác; soạn khung kịch bản test và biểu mẫu quan sát; chuyển bộ tài liệu `chang1–6` của nhóm thành đúng cấu trúc file BTC yêu cầu cho repo cá nhân.
+- **Điểm AI sai hoặc hời hợt:** _(tôi tự đánh giá — chờ điền)_
+- **Can thiệp của tôi:** _(chờ điền)_
+
+---
+
+## Hồ sơ quá trình của nhóm
+
+Sáu chặng do nhóm thực hiện, giữ nguyên bản: [chang1](group/chang1.md) · [chang2](group/chang2.md) · [chang3](group/chang3.md) · [chang4](group/chang4.md) · [chang5](group/chang5.md) · [chang6](group/chang6.md)
